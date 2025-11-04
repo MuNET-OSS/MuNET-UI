@@ -1,0 +1,171 @@
+// aquadx UI 主题 - 只包含通用 UI 组件样式（暗色主题）
+body:has(.root) {
+  .root {
+    display: none;
+  }
+
+  /* ========== 全局基础样式 ========== */
+
+  background: #111;
+  --text-color: #ffffffde;
+
+  ::selection {
+    background: #7280ea;
+  }
+
+  /* ========== 基础表单元素颜色 ========== */
+
+  button,
+  select,
+  :global(a.button) {
+    background-color: #ffffff14;
+
+    &:not(:disabled) {
+      &:hover {
+        background-color: #ffffff1a;
+      }
+
+      &:active {
+        background-color: #ffffff20;
+      }
+    }
+  }
+
+  option {
+    background-color: #222;
+    color: #fff;
+  }
+
+  input[type=checkbox],
+  input[type=radio] {
+    border-color: #b3c6ff;
+
+    &:checked {
+      background-color: #b3c6ff;
+      border-color: #b3c6ff;
+    }
+  }
+
+  --link-color: #b3c6ff;
+
+  .lc {
+    color: var(--link-color);
+  }
+
+  /* ========== 自定义滚动条 ========== */
+
+  @media (hover: hover) {
+    :global(.cst) {
+      &::-webkit-scrollbar-thumb {
+        background-color: #999999;
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+        background-color: #666666 !important;
+      }
+    }
+  }
+
+  /* ========== 全局背景样式 ========== */
+
+  :global(.bg-splash) {
+    background: #111;
+  }
+
+  :global(.bg-avatarMenu),
+  :global(.bg-dropMenu) {
+    background: #3a3a3acc;
+  }
+
+  :global(.bg-avatarMenuButton):hover {
+    background: #ffffff11;
+  }
+
+  :global(.bg-foregroundTask) {
+    background: #111111cc;
+  }
+
+  :global(.bg-taskManager) {
+    background-color: rgb(255 255 255 / 0.1);
+  }
+
+  :global(.c-taskManager-spin) {
+    color: white;
+  }
+
+  :global(.c-taskManager-text) {
+    color: white;
+  }
+
+  :global(.bg-toast-bar) {
+    background: #282828;
+  }
+
+  :global(.bg-toast) {
+    background: #333;
+  }
+
+  :global(.bg-dialogButton-error) {
+    background-color: rgb(159 18 57) !important;
+
+    &:hover {
+      background-color: rgb(190 18 60) !important;
+    }
+  }
+
+  :global(.bg-modal) {
+    background: #383838;
+  }
+
+  /* ========== UI 组件样式类 ========== */
+
+  /** 文本输入框 */
+  .textInput {
+    --border-hover-c: #b3c6ff;
+    --hover-bg: #ffffff1a;
+    --focus--bg: #ffffff20;
+    --bg: #ffffff14;
+  }
+
+  /** 浮动窗口 (Window 组件) */
+  .floatWindow {
+    .titleBar {
+      background: rgb(100, 108, 255);
+      color: white;
+    }
+  }
+
+  /** 可折叠区块 (Section 组件) */
+  .section {
+    .trigger {
+      background: #2a2a2a;
+
+      &:hover {
+        background: #333;
+      }
+    }
+  }
+
+  /** 二维码背景 (Qrcode 组件) */
+  .qrCode {
+    background: #f0f0f0;
+  }
+
+  /** 加载背景 (Button LoadingBackground) */
+  .loadingBackground {
+    --color: #3f3f3f;
+  }
+
+  /* ========== 模态框相关变量 ========== */
+
+  --modal-backdrop-bg: #2b2b2b;
+  --modal-button-bg: rgb(70, 70, 70);
+  --modal-button-hover-bg: rgb(76, 76, 76);
+  --modal-button-active-bg: rgb(81, 81, 81);
+  --modal-title-handle-bg: rgb(100, 108, 255);
+
+  /* ========== 全局变量 ========== */
+
+  --fl-bg: rgba(255, 255, 255, 0.15);
+}
+

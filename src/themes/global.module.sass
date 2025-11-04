@@ -1,0 +1,159 @@
+// 跨主题全局样式
+// 包含所有主题共享的基础样式结构（不含颜色）
+
+:global
+  html, body
+    overflow: hidden
+    font-family: 'Quicksand', "Noto Sans SC"
+    color: var(--text-color)
+
+  :focus-visible
+    outline: unset
+
+  :where(:root)
+    cursor: default
+    user-select: none
+    interpolate-size: allow-keywords
+
+  :not(.monaco-code-editor):not(.monaco-code-editor *)
+    &, button, [role=button]
+      cursor: var(--cursor) 2 2, auto
+
+  img
+    user-drag: none
+    -webkit-user-drag: none
+
+  // 按钮基础样式结构（颜色由主题层提供）
+  button, a.button
+    border-radius: 12px
+    border: 1px solid transparent
+    padding: 0 1.2em
+    font-size: 1em
+    font-weight: 500
+    font-family: inherit
+    opacity: .9
+    transition: all .25s
+    display: flex
+    justify-content: center
+    align-items: center
+    height: 2.6em
+
+    &:disabled
+      opacity: .7
+      cursor: not-allowed
+
+    &:not(:disabled)
+      &:hover
+        opacity: 1
+        transform: scale(1.02)
+
+      &:active
+        opacity: 1
+        transform: scale(0.95)
+
+  // 下拉框基础样式结构
+  select
+    border-radius: 12px
+    border: 1px solid transparent
+    padding: .6em 1.2em
+    font-size: 1em
+    font-weight: 500
+    font-family: inherit
+    opacity: .9
+    transition: all .25s
+
+    &:disabled
+      opacity: .7
+      cursor: not-allowed
+
+    &:not(:disabled)
+      &:hover
+        opacity: 1
+
+      &:active
+        opacity: 1
+
+    option
+      font-weight: 500
+
+  code, pre
+    font-family: "JetBrains Mono"
+    font-variant-ligatures: none
+
+  // 复选框和单选框基础结构（颜色由主题层提供）
+  input[type=checkbox], input[type=radio]
+    width: 1.2em
+    height: 1.2em
+    border-radius: 999px
+    border: 1px solid
+    appearance: none
+    transition: background-color .25s
+
+:global
+  // 通用工具类
+  .w-available
+    width: -webkit-fill-available
+
+  .h-available
+    height: -webkit-fill-available
+
+  .max-w-available
+    max-width: -webkit-fill-available
+
+  .max-h-available
+    max-height: -webkit-fill-available
+
+  .full
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+
+  // Fancy Link（悬停高亮效果）
+  .fl
+    position: relative
+
+    &::before
+      content: ""
+      position: absolute
+      top: -3px
+      left: -5px
+      right: -5px
+      bottom: -3px
+      background: var(--fl-bg)
+      border-radius: 5px
+      transform: scale(0.8)
+      opacity: 0
+      transition: transform 0.4s ease, opacity 0.4s ease
+      z-index: -1
+
+    &:hover::before
+      transform: scale(1)
+      opacity: 1
+
+  .mnui-modal-root
+    .fl
+      &::before
+        z-index: 0
+
+  // 自定义滚动条基础结构（颜色由主题层提供）
+  @media (hover: hover)
+    .cst
+      &::-webkit-scrollbar
+        width: 6px
+        height: 6px
+
+      &::-webkit-scrollbar-thumb
+        border-radius: 3px
+        -webkit-box-shadow: none !important
+        background-image: none !important
+        transition: background 0.2s !important
+
+  .absolute-full
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+

@@ -1,0 +1,193 @@
+// dynamicLight UI 主题 - 只包含通用 UI 组件样式
+body:has(.root) {
+  .root {
+    display: none;
+  }
+
+  /* ========== 全局基础样式 ========== */
+
+  /** 页面背景色 - 极浅的主题色背景 */
+  background: oklch(0.99 0.005 var(--hue));
+
+  /** 全局文本颜色变量 - 深灰色，用于正文 */
+  --text-color: #303133;
+
+  /** 文本选中时的背景色 - 使用主题色 */
+  ::selection {
+    background: oklch(0.75 0.14 var(--hue));
+  }
+
+  /* ========== 基础表单元素颜色 ========== */
+
+  button,
+  select,
+  :global(a.button) {
+    background-color: oklch(0.7 0.07 var(--hue) / 10%);
+
+    &:not(:disabled) {
+      &:hover {
+        background-color: oklch(0.7 0.07 var(--hue) / 17%);
+      }
+
+      &:active {
+        background-color: oklch(0.7 0.07 var(--hue) / 0.2);
+      }
+    }
+  }
+
+  option {
+    background-color: oklch(0.86 0.01 var(--hue));
+    color: #303133;
+  }
+
+  input[type=checkbox],
+  input[type=radio] {
+    border-color: oklch(0.68 0.17 var(--hue));
+
+    &:checked {
+      background-color: oklch(0.68 0.17 var(--hue));
+      border-color: oklch(0.68 0.17 var(--hue));
+    }
+  }
+
+  /** 链接颜色变量 */
+  --link-color: oklch(0.68 0.17 var(--hue));
+
+  .lc {
+    color: var(--link-color);
+  }
+
+  /* ========== 自定义滚动条 ========== */
+
+  @media (hover: hover) {
+    :global(.cst) {
+      &::-webkit-scrollbar-thumb {
+        background-color: oklch(0.86 0.01 var(--hue));
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+        background-color: oklch(0.7 0.01 var(--hue)) !important;
+      }
+    }
+  }
+
+  /* ========== 全局背景样式 ========== */
+
+  :global(.bg-splash) {
+    background: oklch(0.95 0.01 var(--hue));
+  }
+
+  :global(.bg-dropMenu) {
+    background: oklch(0.9 0.02 var(--hue) / 50%);
+  }
+
+  :global(.bg-avatarMenu) {
+    background: oklch(0.8 0.02 var(--hue) / 20%);
+  }
+
+  :global(.bg-avatarMenuButton):hover {
+    background: oklch(0.6 0.1 var(--hue) / 15%);
+  }
+
+  :global(.bg-foregroundTask) {
+    background: oklch(0.95 0.01 var(--hue) / 80%);
+  }
+
+  :global(.bg-taskManager) {
+    background-color: oklch(0.6 0.2 var(--hue) / 10%);
+  }
+
+  :global(.c-taskManager-spin) {
+    color: black;
+  }
+
+  :global(.c-taskManager-text) {
+    color: black;
+  }
+
+  :global(.bg-toast-bar) {
+    background: oklch(0.9 0.03 var(--hue));
+  }
+
+  :global(.bg-toast) {
+    background: oklch(0.95 0.02 var(--hue));
+  }
+
+  :global(.bg-dialogButton-error) {
+    background-color: oklch(81% 0.117 11.638) !important;
+
+    &:hover {
+      background-color: oklch(78.2% 0.194 13.428) !important;
+    }
+  }
+
+  :global(.bg-modal) {
+    background: oklch(0.96 0.008 var(--hue));
+  }
+
+  /* ========== 模态框相关变量 ========== */
+
+  --modal-backdrop-bg: oklch(0.995 0.005 var(--hue));
+  --modal-button-bg: oklch(0.92 0.01 var(--hue));
+  --modal-button-hover-bg: oklch(0.9 0.02 var(--hue));
+  --modal-button-active-bg: oklch(0.9 0.035 var(--hue));
+  --modal-title-handle-bg: oklch(0.7 0.15 var(--hue));
+
+  /* ========== UI 组件样式类 ========== */
+
+  /** 文本输入框 */
+  .textInput {
+    --border-hover-c: oklch(0.68 0.17 var(--hue));
+    --hover-bg: oklch(0.7 0.07 var(--hue) / 0.17);
+    --focus--bg: oklch(0.7 0.07 var(--hue) / 0.2);
+    --bg: oklch(0.7 0.07 var(--hue) / 0.1);
+  }
+
+  /** 浮动窗口 (Window 组件) */
+  .floatWindow {
+    .titleBar {
+      background: oklch(0.8 0.1 var(--hue));
+      color: white;
+    }
+  }
+
+  /** 可折叠区块 (Section 组件) */
+  .section {
+    .trigger {
+      background: oklch(0.96 0.01 var(--hue));
+
+      &:hover {
+        background: oklch(0.95 0.02 var(--hue));
+      }
+    }
+  }
+
+  /** 模态框中的 section 组件 */
+  :global(.mnui-modal-root) {
+    .section {
+      .trigger {
+        background: oklch(0.935 0.03 var(--hue));
+
+        &:hover {
+          background: oklch(0.92 0.04 var(--hue));
+        }
+      }
+    }
+  }
+
+  /** 二维码背景 (Qrcode 组件) */
+  .qrCode {
+    background: oklch(0.99 0.005 var(--hue));
+  }
+
+  /** 加载背景 (Button LoadingBackground) */
+  .loadingBackground {
+    --color: oklch(0.9 0.03 var(--hue));
+  }
+
+  /* ========== 全局变量 ========== */
+
+  /** 链接悬停背景色 (Fancy Link) */
+  --fl-bg: oklch(0.5 0.16 var(--hue) / 15%);
+}
+

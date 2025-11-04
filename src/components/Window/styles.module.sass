@@ -1,0 +1,172 @@
+.window
+  position: fixed
+  display: flex
+  flex-direction: column
+  background: rgba(255, 255, 255, 0.95)
+  border-radius: 12px
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15)
+  overflow: hidden
+  z-index: 1000
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+  backdrop-filter: blur(10px)
+
+  &.minimized
+    border-radius: 50%
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2)
+    overflow: visible
+
+  &.dragging
+    cursor: move
+    user-select: none
+    opacity: 0.5
+
+  &.resizing
+    user-select: none
+
+.titleBar
+  display: flex
+  align-items: center
+  justify-content: space-between
+  padding: 12px 16px
+  cursor: move
+  user-select: none
+  min-height: 48px
+
+  .minimized &
+    width: 100%
+    height: 100%
+    padding: 0
+    justify-content: center
+    align-items: center
+    border-radius: 50%
+
+.title
+  font-size: 16px
+  font-weight: 600
+  flex: 1
+  pointer-events: none
+
+.controls
+  display: flex
+  gap: 8px
+  align-items: center
+
+.controlBtn
+  width: 28px
+  height: 28px
+  border: none
+  border-radius: 6px
+  cursor: pointer
+  transition: all 0.2s
+  display: flex
+  align-items: center
+  justify-content: center
+  padding: 0
+
+  &:hover
+    transform: scale(1.1)
+
+  &:active
+    transform: scale(0.95)
+
+.minimizeBtn
+  .minimizeIcon
+    width: 12px
+    height: 2px
+    background: white
+    border-radius: 1px
+    pointer-events: none
+
+.closeBtn
+  .closeIcon
+    width: 14px
+    height: 14px
+    position: relative
+    pointer-events: none
+
+    &::before, &::after
+      content: ''
+      position: absolute
+      width: 100%
+      height: 2px
+      background: white
+      top: 50%
+      left: 50%
+      border-radius: 1px
+
+    &::before
+      transform: translate(-50%, -50%) rotate(45deg)
+
+    &::after
+      transform: translate(-50%, -50%) rotate(-45deg)
+
+.minimizedIcon
+  width: 100%
+  height: 100%
+  display: flex
+  align-items: center
+  justify-content: center
+  font-size: 1.8rem
+  font-weight: bold
+  color: white
+  cursor: pointer
+  user-select: none
+
+.content
+  flex: 1
+  overflow: auto
+  background: rgba(255, 255, 255, 0.98)
+
+// 调整大小手柄
+.resizeHandle
+  position: absolute
+  z-index: 10
+
+  &.resizeN, &.resizeS
+    left: 0
+    right: 0
+    height: 4px
+    cursor: ns-resize
+
+  &.resizeN
+    top: 0
+
+  &.resizeS
+    bottom: 0
+
+  &.resizeW, &.resizeE
+    top: 0
+    bottom: 0
+    width: 4px
+    cursor: ew-resize
+
+  &.resizeW
+    left: 0
+
+  &.resizeE
+    right: 0
+
+  &.resizeNw, &.resizeNe, &.resizeSw, &.resizeSe
+    width: 16px
+    height: 16px
+
+  &.resizeNw
+    top: 0
+    left: 0
+    cursor: nwse-resize
+
+  &.resizeNe
+    top: 0
+    right: 0
+    cursor: nesw-resize
+
+  &.resizeSw
+    bottom: 0
+    left: 0
+    cursor: nesw-resize
+
+  &.resizeSe
+    bottom: 0
+    right: 0
+    cursor: nwse-resize
+

@@ -1,0 +1,64 @@
+@keyframes inputFocusBorderAnim
+  0%
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    opacity: 1
+    border-radius: 12px
+  100%
+    top: -8px
+    left: -8px
+    right: -8px
+    bottom: -8px
+    opacity: 0
+    border-radius: 16px
+
+.wrapper
+  position: relative
+
+  &:not(.disabled)
+    &:has(input:focus, textarea:focus)
+      &::after
+        content: ''
+        display: block
+        position: absolute
+        border: 2px solid var(--border-hover-c)
+        opacity: 0
+        pointer-events: none
+        animation: inputFocusBorderAnim .5s
+
+    input, textarea
+      &:hover
+        background-color: var(--hover-bg)
+
+      &:focus
+        background-color: var(--focus--bg)
+        border: 2px solid var(--border-hover-c)
+
+  input, textarea
+    border-radius: 12px
+    padding: .6em 1.2em
+    font-size: 1em
+    font-weight: 500
+    font-family: inherit
+    background-color: var(--bg)
+    transition: all .3s
+    box-sizing: border-box
+    position: relative
+    border: 2px solid transparent
+    width: 100%
+    height: 100%
+    resize: none
+
+.save
+  &.from
+    transform: scale(40%) !important
+    opacity: 0 !important
+
+  &.to
+    transform: scale(100%)
+    opacity: 1
+
+  &.active
+    transition: all .2s !important

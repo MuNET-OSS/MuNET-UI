@@ -1,0 +1,14 @@
+.loading
+  width: 100%
+
+  background-image: repeating-linear-gradient(-45deg, var(--color) 25%, transparent 0, transparent 50%,var(--color) 0, var(--color) 75%, transparent 0)
+  background-size: 30px 30px
+  mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0.6), rgba(0,0,0,0.2), rgba(0,0,0,0))
+
+  animation: scroll-left 0.8s linear infinite
+
+@keyframes scroll-left
+  0%
+    background-position: 0 0
+  100%
+    background-position: -30px 0

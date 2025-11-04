@@ -1,0 +1,93 @@
+.progress
+  .backdrop
+    transition: opacity 0.2s ease-in-out
+
+  .content, .actions, .modal
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out
+
+  .title
+    transition: transform 0.2s ease-in-out, opacity 0.1s ease-in-out
+
+.in
+  .title
+    transition-delay: .1s
+
+  .content
+    transition-delay: .2s
+
+  .actions
+    transition-delay: .3s
+
+.out
+  .title
+    transition-delay: .06s
+
+  .content
+    transition-delay: .03s
+
+.backdrop
+  background-color: var(--modal-backdrop-bg)
+  opacity: 0.9
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+
+  &:hover
+    ~ .modalOut
+      opacity: 0.9
+
+.modalOut
+  transition: opacity 0.2s
+
+.modal
+  opacity: 1
+  transform-origin: center
+
+.actions
+  transform: translateY(100%)
+
+  button
+    flex-grow: 1
+    background-color: var(--modal-button-bg) !important
+    opacity: 1 !important
+
+    &:not(:disabled)
+      &:hover
+        transform: translateY(-5%)
+
+    &:not(:disabled, :global(.bg-dialogButton-error))
+      &:hover
+        background-color: var(--modal-button-hover-bg) !important
+
+      &:active
+        background-color: var(--modal-button-active-bg) !important
+
+.title
+  position: relative
+  transform: translateY(-0.3em)
+
+  &::after
+    content: ""
+    position: absolute
+    left: 0
+    right: 0
+    bottom: -0.15em
+    height: 0.15em
+    background: var(--modal-title-handle-bg)
+    border-radius: 9999px
+
+.src
+  .backdrop, .modal, .title, .content, .actions
+    opacity: 0
+    transform: scale(1.1)
+
+  .title
+    transform: translateY(-1em)
+
+  .content
+    transform: translateY(2em)
+
+  .actions
+    transform: translateY(200%)
