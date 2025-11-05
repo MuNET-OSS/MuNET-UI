@@ -9,6 +9,7 @@ export default defineComponent({
   props: {
     value: String,
     type: String,
+    step: Number,
     placeholder: String,
     disabled: Boolean,
     textarea: Boolean,
@@ -81,7 +82,7 @@ export default defineComponent({
       {props.textarea ?
         <textarea ref={inputRef} v-model={value.value} placeholder={props.placeholder} disabled={disabled.value} onBlur={props.onBlur} onFocus={props.onFocus} style={{ height: props.height }} class="min-h-12 cst" />
         :
-        <input ref={inputRef} v-model={value.value} type={props.type} placeholder={props.placeholder} disabled={disabled.value} onBlur={props.onBlur} onFocus={props.onFocus} onKeypress={onKeyPress} class="min-h-12" />
+        <input ref={inputRef} v-model={value.value} type={props.type} placeholder={props.placeholder} disabled={disabled.value} onBlur={props.onBlur} onFocus={props.onFocus} onKeypress={onKeyPress} class="min-h-12" step={props.step} />
       }
       {props.limit && <div style={{ right: limitTextRight.value }} class={['absolute bottom-1 text-2.5 op-60 pointer-events-none transition-right', isLimitExceeded.value && 'c-red-5 font-bold']}>
         {props.limit - (value.value?.length || 0)}
