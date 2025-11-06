@@ -1,5 +1,5 @@
 // @munet/ui 主题系统
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { usePreferredDark, useStorage, useCssVar } from '@vueuse/core';
 import globalStyles from './global.module.sass';
 import { dynamicLightUI, dynamicLightVars } from './dynamicLight';
@@ -120,7 +120,9 @@ export const themeClasses = composeThemeRoots(
 
 // 初始化色调
 const cssHue = useCssVar('--hue', document.body);
-cssHue.value = selectedThemeHue.value.toString();
+watch(selectedThemeHue, (newVal) => {
+  cssHue.value = newVal.toString();
+}, { immediate: true });
 
 // 辅助变量
 export const isLightTheme = computed(() => {
