@@ -1,11 +1,12 @@
-import { defineComponent, PropType, ref, computed, inject, Ref } from 'vue';
+import { defineComponent, PropType, ref, computed, inject, Ref, VNode } from 'vue';
 import { useVModel, onClickOutside } from '@vueuse/core';
 import styles from './style.module.sass';
 import { theme } from '../../themes';
 import TransitionVertical from '../TransitionVertical.vue';
+import { JSX } from 'vue/jsx-runtime';
 
 export interface SelectOption {
-  label: string;
+  label: string | number | (() => VNode | string | number | JSX.Element);
   value: string | number;
   disabled?: boolean;
 }
@@ -40,8 +41,14 @@ const Select = defineComponent({
       return props.options.find(opt => opt.value === value.value);
     });
 
+    const renderLabel = (label: string | (() => VNode | string)) => {
+      return typeof label === 'function' ? label() : label;
+    };
+
     const displayText = computed(() => {
-      return selectedOption.value?.label || props.placeholder;
+      if (!selectedOption.value) return props.placeholder;
+      const label = selectedOption.value.label;
+      return typeof label === 'function' ? label() : label;
     });
 
     const toggleDropdown = () => {
@@ -104,7 +111,7 @@ const Select = defineComponent({
                     ]}
                     onClick={() => selectOption(option)}
                   >
-                    {option.label}
+                    {renderLabel(option.label)}
                   </div>
                 ))
               )}
