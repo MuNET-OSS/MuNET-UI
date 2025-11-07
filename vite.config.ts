@@ -18,6 +18,9 @@ export default defineConfig({
         'vue',
         '@vueuse/core',
         'lodash-es',
+        '@chenfengyuan/vue-qrcode',
+        /^qrcode/,
+        'dijkstrajs',
       ],
       output: {
         preserveModules: true,

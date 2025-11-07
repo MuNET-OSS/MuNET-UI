@@ -156,6 +156,29 @@ body:has(.root) {
     --color: #3f3f3f;
   }
 
+  /** 子导航栏 */
+  .subNaviBar {
+    >a:hover:not(.active) {
+      background: #2c2c2c;
+    }
+
+    :not(.active) {
+      a:hover:not(.active),
+      div:hover:not(.active) {
+        background: #2c2c2c;
+      }
+    }
+
+    .active {
+      background: rgb(55 55 55);
+    }
+  }
+
+  /** 警告背景 */
+  .warningBackground {
+    --color: #973c00;
+  }
+
   /* ========== 模态框相关变量 ========== */
 
   --modal-backdrop-bg: #2b2b2b;

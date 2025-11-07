@@ -185,6 +185,30 @@ body:has(.root) {
     --color: oklch(0.9 0.03 var(--hue));
   }
 
+  /** 子导航栏 */
+  .subNaviBar {
+    >a:hover:not(.active):not(.disabled),
+    div:hover:not(.active):not(.disabled) {
+      background: oklch(0.95 0.01 var(--hue));
+    }
+
+    :not(.active):not(.disabled) {
+      a:hover:not(.active):not(.disabled),
+      div:hover:not(.active):not(.disabled) {
+        background: oklch(0.95 0.01 var(--hue));
+      }
+    }
+
+    .active {
+      background: oklch(0.85 0.07 var(--hue));
+    }
+  }
+
+  /** 警告背景 */
+  .warningBackground {
+    --color: #ff8d49;
+  }
+
   /* ========== 全局变量 ========== */
 
   /** 链接悬停背景色 (Fancy Link) */

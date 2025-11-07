@@ -25,3 +25,16 @@ export { default as Qrcode } from './components/Qrcode';
 export { default as TransitionVertical } from './components/TransitionVertical.vue';
 export { default as Range } from './components/Range.vue';
 
+// 新迁移的组件
+export { default as DropMenu } from './components/DropMenu';
+export { default as GlobalElementsContainer } from './components/GlobalElementsContainer';
+export { default as ScrollText } from './components/ScrollText';
+export { default as WhateverNaviBar } from './components/SubNaviBar/WhateverNaviBar';
+export { default as WarningBackground } from './components/WarningBackground';
+export type { NaviItem } from './components/SubNaviBar/WhateverNaviBar';
+
+// 导出 GlobalElementsContainer 的子组件和 hooks
+export { foregroundTask } from './components/GlobalElementsContainer/ForegroundTask';
+export { showTransactionalDialog } from './components/GlobalElementsContainer/TransactionalDialog';
+export { taskManager } from './components/GlobalElementsContainer/TaskManager';
+
