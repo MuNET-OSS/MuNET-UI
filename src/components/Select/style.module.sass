@@ -1,0 +1,93 @@
+.select
+  position: relative
+  width: 100%
+  min-width: 120px
+
+  &:not(.disabled)
+    .trigger
+
+      &:hover
+        background-color: var(--hover-bg)
+
+    &.open
+      .trigger
+        background-color: var(--focus--bg)
+        border: 2px solid var(--border-hover-c)
+
+  &.disabled
+    .trigger
+      opacity: .5
+
+.trigger
+  border-radius: 12px
+  padding: .6em 1.2em
+  font-size: 1em
+  font-weight: 500
+  font-family: inherit
+  background-color: var(--bg)
+  transition: all .3s
+  box-sizing: border-box
+  border: 2px solid transparent
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: .5em
+  min-height: 2.8em
+
+  &.placeholder
+    .text
+      opacity: .5
+
+.text
+  flex: 1
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap
+
+.arrow
+  transition: transform .3s
+  opacity: .6
+
+  &.arrowOpen
+    transform: rotate(180deg)
+
+.dropdown
+  position: absolute
+  top: calc(100% + 8px)
+  left: 0
+  right: 0
+  border-radius: 12px
+  padding: 8px
+  z-index: 1000
+  max-height: 300px
+  overflow-y: auto
+
+  &::-webkit-scrollbar
+    width: 6px
+
+  &::-webkit-scrollbar-thumb
+    background-color: var(--border-hover-c)
+    border-radius: 3px
+
+.option
+  padding: .5em 1em
+  transition: all .2s
+  display: flex
+  align-items: center
+  justify-content: space-between
+  font-weight: 500
+  border-radius: 8px
+
+  &.selected
+    color: var(--border-hover-c)
+    font-weight: 600
+
+  &.optionDisabled
+    opacity: .4
+
+.empty
+  padding: 1.5em 1.2em
+  text-align: center
+  opacity: .5
+  font-weight: 500
+

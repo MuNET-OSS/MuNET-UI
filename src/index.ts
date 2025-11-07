@@ -22,6 +22,8 @@ export { default as Section } from './components/Section';
 export { default as DateFormat } from './components/DateFormat';
 export { default as Qrcode } from './components/Qrcode';
 export { default as NumberInput } from './components/NumberInput';
+export { default as Select } from './components/Select';
+export type { SelectOption, SelectExposed, SelectInstance } from './components/Select';
 // Vue 组件
 export { default as TransitionVertical } from './components/TransitionVertical.vue';
 export { default as Range } from './components/Range.vue';
