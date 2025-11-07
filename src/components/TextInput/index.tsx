@@ -1,11 +1,16 @@
 import { modalShowing } from '../../states/modal';
-import { defineComponent, PropType, ref, computed, inject, Ref, Transition } from 'vue';
-import { onStartTyping, useElementSize, useVModel } from '@vueuse/core';
+import { defineComponent, PropType, ref, computed, inject, Ref, Transition, shallowRef } from 'vue';
+import { onStartTyping, useElementSize, useFocus, useVModel } from '@vueuse/core';
 import styles from './style.module.sass';
 import Button from '../Button';
 import { theme } from '../../themes';
 
-export default defineComponent({
+export interface TextInputExposed {
+  insertText: (text: string) => void;
+  focused: Ref<boolean>;
+}
+
+const TextInput = defineComponent({
   props: {
     value: String,
     type: String,
@@ -27,7 +32,9 @@ export default defineComponent({
     const value = useVModel(props, 'value', emit);
     const disabledInject = inject<Ref<boolean>>('disabled');
     const disabled = computed(() => props.disabled || disabledInject?.value);
-    const inputRef = ref<HTMLInputElement | HTMLTextAreaElement | null>(null);
+    const inputRef = shallowRef<HTMLInputElement | HTMLTextAreaElement | null>(null);
+    const { focused } = useFocus(inputRef);
+
     const onKeyPress = (e: KeyboardEvent) => {
       if (e.key === 'Enter' && !disabled.value) {
         e.preventDefault();
@@ -42,7 +49,7 @@ export default defineComponent({
       }
     };
 
-    expose({
+    expose<TextInputExposed>({
       insertText: (text: string) => {
         if (inputRef.value) {
           const inputElement = inputRef.value as HTMLInputElement | HTMLTextAreaElement;
@@ -55,6 +62,7 @@ export default defineComponent({
           inputElement.focus(); // Keep the focus on the input
         }
       },
+      focused,
     });
 
     onStartTyping(() => {
@@ -99,3 +107,7 @@ export default defineComponent({
     </div>;
   },
 });
+
+export type TextInputInstance = InstanceType<typeof TextInput> & TextInputExposed;
+
+export default TextInput;
