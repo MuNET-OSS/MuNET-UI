@@ -28,7 +28,7 @@ const Select = defineComponent({
       default: '请选择',
     },
     disabled: Boolean,
-    onChange: Function as PropType<(value: string | number) => void>,
+    onChange: Function as PropType<(value: any) => void>,
   },
   setup(props, { emit, expose }) {
     const value = useVModel(props, 'value', emit);
