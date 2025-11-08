@@ -8,6 +8,9 @@
   .title
     transition: transform 0.2s ease-in-out, opacity 0.1s ease-in-out
 
+.backdrop, .modal, .title, .content, .actions
+  will-change: transform, opacity
+
 .in
   .title
     transition-delay: .1s

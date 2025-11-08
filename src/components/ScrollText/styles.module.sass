@@ -1,22 +1,15 @@
 @keyframes scroll
   0%
-    margin-left: 0
     transform: translateX(0)
-
 
   10%
-    margin-left: 0
     transform: translateX(0)
 
-
   90%
-    margin-left: 100%
-    transform: translateX(-100%)
-
+    transform: translateX(calc(-100% + var(--wrap-width, 100%)))
 
   100%
-    margin-left: 100%
-    transform: translateX(-100%)
+    transform: translateX(calc(-100% + var(--wrap-width, 100%)))
 
 .wrap
   max-width: 100%
@@ -24,9 +17,14 @@
   vertical-align: top
   overflow: hidden
   white-space: nowrap
-
+  position: relative
 
 .item
-  animation: scroll linear 4s alternate infinite
-  float: left
+  display: inline-block
+  white-space: nowrap
+
+  // 只在需要滚动时才添加动画和 will-change
+  &.scrolling
+    will-change: transform
+    animation: scroll linear 4s alternate infinite
 
