@@ -1,6 +1,6 @@
 import { useMagicKeys, useVModel, whenever } from '@vueuse/core';
-import { defineComponent, PropType, computed, watch, Transition, Teleport } from 'vue';
-import { modalShowing } from '../../states/modal';
+import { defineComponent, PropType, computed, watch, Transition, Teleport, onBeforeUnmount, ref } from 'vue';
+import { modalShowing, registerModal, unregisterModal, getModalIndex, isTopModal } from '../../states/modal';
 import styles from './styles.module.sass';
 
 // 重新导出 modalShowing 以保持兼容性
@@ -17,6 +17,8 @@ export default defineComponent({
     innerClass: { type: String, default: '' },
   },
   setup(props, { emit, slots }) {
+    const modalId = ref<symbol | null>(null);
+
     const show = computed({
       get: () => props.show,
       set(v) {
@@ -25,14 +27,39 @@ export default defineComponent({
       },
     });
 
-    // onBeforeUnmount(() => modalShowing.value = show.value = false);
-    watch(() => show.value, (v) => modalShowing.value = v);
+    // 管理 modal 的注册和注销
+    watch(() => show.value, (v) => {
+      if (v && !modalId.value) {
+        // 打开时注册
+        modalId.value = registerModal();
+      } else if (!v && modalId.value) {
+        // 关闭时注销
+        unregisterModal(modalId.value);
+        modalId.value = null;
+      }
+    }, { immediate: true });
+
+    // 组件卸载时确保清理
+    onBeforeUnmount(() => {
+      if (modalId.value) {
+        unregisterModal(modalId.value);
+        modalId.value = null;
+      }
+    });
+
+    // 计算当前 modal 的 z-index
+    const zIndex = computed(() => {
+      if (!modalId.value) return 58;
+      const index = getModalIndex(modalId.value);
+      return 58 + index * 3; // 每个 modal 占用 3 层（backdrop, container, content）
+    });
 
     const esc = () => {
       if (!show.value) return;
+      // 只有最顶层的 modal 才响应 ESC
+      if (modalId.value && !isTopModal(modalId.value)) return;
       if (props.esc) {
         console.log('esc');
-        modalShowing.value = false;
         show.value = false;
       }
     };
@@ -45,9 +72,9 @@ export default defineComponent({
         enterFromClass={styles.src} leaveToClass={styles.src} enterActiveClass={[styles.progress, styles.in].join(' ')} leaveActiveClass={[styles.progress, styles.out].join(' ')}
       >
         {show.value && <div class="mnui-modal-root">
-          <div class={[styles.backdrop, 'z-58']} onClick={esc} />
-          <div class={['absolute left-50vw top-50dvh translate--50% z-59', props.esc && styles.modalOut]}>
-            <div class={['bg-modal rd-2xl z-60 p-6 flex flex-col max-w-90dvw', styles.modal, props.innerClass]} style={{ width: props.width }}>
+          <div class={styles.backdrop} style={{ zIndex: zIndex.value }} onClick={esc} />
+          <div class={['absolute left-50vw top-50dvh translate--50%', props.esc && styles.modalOut]} style={{ zIndex: zIndex.value + 1 }}>
+            <div class={['bg-modal rd-2xl p-6 flex flex-col max-w-90dvw', styles.modal, props.innerClass]} style={{ width: props.width, zIndex: zIndex.value + 2 }}>
               {props.warn && slots.warning?.()}
               <div class="flex flex-col gap-4">
                 <div class={['text-1.5em flex items-center justify-center']}>
