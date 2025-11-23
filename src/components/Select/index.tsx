@@ -36,12 +36,13 @@ const Select = defineComponent({
     const disabled = computed(() => props.disabled || disabledInject?.value);
     const isOpen = ref(false);
     const selectRef = ref<HTMLDivElement | null>(null);
+    const dropdownPosition = ref<'bottom' | 'top'>('bottom');
 
     const selectedOption = computed(() => {
       return props.options.find(opt => opt.value === value.value);
     });
 
-    const renderLabel = (label: string | (() => VNode | string)) => {
+    const renderLabel = (label: string | number | (() => VNode | string | number)) => {
       return typeof label === 'function' ? label() : label;
     };
 
@@ -51,8 +52,30 @@ const Select = defineComponent({
       return typeof label === 'function' ? label() : label;
     });
 
+    const updateDropdownPosition = () => {
+      if (!selectRef.value) return;
+
+      const rect = selectRef.value.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const spaceBelow = viewportHeight - rect.bottom;
+      const spaceAbove = rect.top;
+
+      // 下拉菜单最大高度 (与 CSS 中的 max-height 保持一致)
+      const dropdownMaxHeight = 500;
+
+      // 如果下方空间不足且上方空间更充足，则向上展开
+      if (spaceBelow < dropdownMaxHeight && spaceAbove > spaceBelow) {
+        dropdownPosition.value = 'top';
+      } else {
+        dropdownPosition.value = 'bottom';
+      }
+    };
+
     const toggleDropdown = () => {
       if (disabled.value) return;
+      if (!isOpen.value) {
+        updateDropdownPosition();
+      }
       isOpen.value = !isOpen.value;
     };
 
@@ -69,7 +92,10 @@ const Select = defineComponent({
 
     expose<SelectExposed>({
       open: () => {
-        if (!disabled.value) isOpen.value = true;
+        if (!disabled.value) {
+          updateDropdownPosition();
+          isOpen.value = true;
+        }
       },
       close: () => {
         isOpen.value = false;
@@ -96,7 +122,11 @@ const Select = defineComponent({
 
         <TransitionVertical>
           {isOpen.value && (
-            <div class={[styles.dropdown, 'bg-dropMenu backdrop-blur-8']}>
+            <div class={[
+              styles.dropdown,
+              'bg-dropMenu backdrop-blur-8',
+              dropdownPosition.value === 'top' && styles.dropdownTop
+            ]}>
               {props.options.length === 0 ? (
                 <div class={styles.empty}>暂无选项</div>
               ) : (

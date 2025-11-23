@@ -59,7 +59,7 @@
   border-radius: 12px
   padding: 8px
   z-index: 1000
-  max-height: 300px
+  max-height: 500px
   overflow-y: auto
 
   &::-webkit-scrollbar
@@ -68,6 +68,10 @@
   &::-webkit-scrollbar-thumb
     background-color: var(--border-hover-c)
     border-radius: 3px
+
+  &.dropdownTop
+    top: auto
+    bottom: calc(100% + 8px)
 
 .option
   padding: .5em 1em
