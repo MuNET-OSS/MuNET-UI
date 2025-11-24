@@ -1,4 +1,4 @@
-import { useMagicKeys, useVModel, whenever } from '@vueuse/core';
+import { useMagicKeys, useTimeout, useVModel, whenever } from '@vueuse/core';
 import { defineComponent, PropType, computed, watch, Transition, Teleport, onBeforeUnmount, ref } from 'vue';
 import { modalShowing, registerModal, unregisterModal, getModalIndex, isTopModal } from '../../states/modal';
 import styles from './styles.module.sass';
@@ -15,8 +15,9 @@ export default defineComponent({
     width: { type: String, default: 'auto' },
     warn: Boolean,
     innerClass: { type: String, default: '' },
+    actionDelay: { type: Number, default: 0 },
   },
-  setup(props, { emit, slots }) {
+  setup(props, { emit, slots, expose }) {
     const modalId = ref<symbol | null>(null);
 
     const show = computed({
@@ -66,12 +67,25 @@ export default defineComponent({
     const { escape } = useMagicKeys();
     whenever(() => escape.value, esc);
 
+    const actionDelayOver = ref(false);
+    watch(() => show.value, v => {
+      if (!v) {
+        actionDelayOver.value = true;
+        return;
+      }
+      actionDelayOver.value = false;
+      setTimeout(()=>{
+        actionDelayOver.value = true;
+      }, props.actionDelay + 500);
+    }, { immediate: true });
+    const actionDelay = computed(() => actionDelayOver.value ? 0 : props.actionDelay);
+
     return () => <Teleport to="#app">
       <Transition
-        duration={500}
+        duration={500 + actionDelay.value}
         enterFromClass={styles.src} leaveToClass={styles.src} enterActiveClass={[styles.progress, styles.in].join(' ')} leaveActiveClass={[styles.progress, styles.out].join(' ')}
       >
-        {show.value && <div class="mnui-modal-root">
+        {show.value && <div class="mnui-modal-root" style={{ '--action-delay': actionDelay.value + 'ms' }}>
           <div class={styles.backdrop} style={{ zIndex: zIndex.value }} onClick={esc} />
           <div class={['absolute left-50vw top-50dvh translate--50%', props.esc && styles.modalOut]} style={{ zIndex: zIndex.value + 1 }}>
             <div class={['bg-modal rd-2xl p-6 flex flex-col max-w-90dvw', styles.modal, props.innerClass]} style={{ width: props.width, zIndex: zIndex.value + 2 }}>
