@@ -13,7 +13,7 @@ export default defineComponent({
 
     return () => <DropDown
       buttonText={props.buttonText} innerStyle={{ width: props.width }} ref={dd}
-      innerClass={['absolute top-full left-50% mt-2 bg-dropMenu rounded-lg p-2 z-10 flex gap-2 translate-x--50% backdrop-blur-8', !props.row && 'flex-col']}
+      innerClass={['absolute top-full left-50% bg-dropMenu rounded-lg p-2 z-10 flex gap-2 translate-x--50% backdrop-blur-8', !props.row && 'flex-col']}
     >
       {{
         default: () => props.options.map((option, index) => (
