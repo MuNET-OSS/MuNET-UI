@@ -21,21 +21,19 @@ export default defineComponent({
       },
     });
 
-    return () => <div class="flex">
-      <div class="relative" ref={menuRef}>
-        {slots.trigger ? slots.trigger(() => show.value = !show.value) :
-          <Button ing={props.buttonIng} onClick={() => show.value = !show.value}>{props.buttonText}</Button>}
-        <TransitionVertical>
-          {show.value &&
-            <div
-              class={props.innerClass}
-              style={props.innerStyle}
-            >
-              {slots.default?.()}
-            </div>
-          }
-        </TransitionVertical>
-      </div>
+    return () => <div class="relative" ref={menuRef}>
+      {slots.trigger ? slots.trigger(() => show.value = !show.value) :
+        <Button ing={props.buttonIng} onClick={() => show.value = !show.value}>{props.buttonText}</Button>}
+      <TransitionVertical>
+        {show.value &&
+          <div
+            class={props.innerClass}
+            style={props.innerStyle}
+          >
+            {slots.default?.()}
+          </div>
+        }
+      </TransitionVertical>
     </div>;
   },
 });
