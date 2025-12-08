@@ -36,6 +36,10 @@ body:has(.root) {
     color: #fff;
   }
 
+  .selectedBorder {
+    border-color: #b3c6ff;
+  }
+
   input[type=checkbox],
   input[type=radio] {
     border-color: #b3c6ff;

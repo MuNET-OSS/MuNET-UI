@@ -40,6 +40,10 @@ body:has(.root) {
     color: #303133;
   }
 
+  .selectedBorder {
+    border-color: oklch(0.68 0.17 var(--hue));
+  }
+
   input[type=checkbox],
   input[type=radio] {
     border-color: oklch(0.68 0.17 var(--hue));
