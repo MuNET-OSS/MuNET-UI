@@ -58,7 +58,7 @@ export default defineComponent({
         <div ref={wrapRef} class={styles.wrap}>
           <div ref={itemRef} class={[
             styles.item,
-            shouldScroll.value && styles.scrolling
+            shouldScroll.value && styles.scrolling,
           ]} style={{ '--wrap-width': wrapWidth.value + 'px' }}>
             {slots.default?.()}
           </div>
