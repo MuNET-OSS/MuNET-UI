@@ -7,13 +7,14 @@ export default defineComponent({
     width: { type: String as PropType<string>, default: 'max-context' },
     row: Boolean,
     options: { type: Array as PropType<{ label: string, action: () => any }[]>, default: () => [] },
+    innerClass: { type: String as PropType<string>, default: '' },
   },
   setup(props, { slots }) {
     const dd = ref<any>();
 
     return () => <DropDown
       buttonText={props.buttonText} innerStyle={{ width: props.width }} ref={dd}
-      innerClass={['absolute top-full left-50% bg-dropMenu rounded-lg p-2 z-10 flex gap-2 translate-x--50% backdrop-blur-8', !props.row && 'flex-col']}
+      innerClass={['absolute top-full left-50% bg-dropMenu rounded-lg p-2 z-10 flex gap-2 translate-x--50% backdrop-blur-8', !props.row && 'flex-col', props.innerClass]}
     >
       {{
         default: () => props.options.map((option, index) => (
