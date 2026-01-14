@@ -2,6 +2,7 @@ import { useMagicKeys, useTimeout, useVModel, whenever } from '@vueuse/core';
 import { defineComponent, PropType, computed, watch, Transition, Teleport, onBeforeUnmount, ref } from 'vue';
 import { modalShowing, registerModal, unregisterModal, getModalIndex, isTopModal } from '../../states/modal';
 import styles from './styles.module.sass';
+import WarningBackground from '../WarningBackground';
 
 // 重新导出 modalShowing 以保持兼容性
 export { modalShowing };
@@ -89,7 +90,7 @@ export default defineComponent({
           <div class={styles.backdrop} style={{ zIndex: zIndex.value }} onClick={esc} />
           <div class={['absolute left-50vw top-50dvh translate--50%', props.esc && styles.modalOut]} style={{ zIndex: zIndex.value + 1 }}>
             <div class={['bg-modal rd-2xl p-6 flex flex-col max-w-90dvw', styles.modal, props.innerClass]} style={{ width: props.width, zIndex: zIndex.value + 2 }}>
-              {props.warn && slots.warning?.()}
+              {props.warn && (slots.warning?.() || <WarningBackground class="absolute top-0 left-0 right-0 h-12 rd-t-2xl" />)}
               <div class="flex flex-col gap-4">
                 <div class={['text-1.5em flex items-center justify-center']}>
                   <div class={[styles.title]}>

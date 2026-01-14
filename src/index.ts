@@ -3,6 +3,9 @@
 // 导出主题系统
 export * from './themes';
 
+// 导出 i18n
+export * from './i18n';
+
 // 导出控制器
 export * from './controllers/toastController';
 
@@ -24,9 +27,9 @@ export { default as Qrcode } from './components/Qrcode';
 export { default as NumberInput } from './components/NumberInput';
 export { default as Select } from './components/Select';
 export type { SelectOption, SelectExposed, SelectInstance } from './components/Select';
-// Vue 组件
 export { default as TransitionVertical } from './components/TransitionVertical.vue';
 export { default as Range } from './components/Range.vue';
+export { default as TransitionOpacity } from './components/TransitionOpacity';
 
 // 新迁移的组件
 export { default as DropMenu } from './components/DropMenu';

@@ -2,6 +2,7 @@ import { defineComponent, type MaybeRef, type Ref, ref } from 'vue';
 import { TransitionGroup } from 'vue';
 import Modal from '../Modal';
 import styles from './TaskManager.module.sass';
+import { getUIString } from '../../i18n';
 
 interface Task {
   id: symbol;
@@ -115,15 +116,15 @@ export default defineComponent({
         </div>
 
         <Modal
-          title="任务执行失败"
+          title={getUIString('taskFailed')}
           width="400px"
           v-model:show={taskManager.showErrorModal.value}
         >{{
-          default: () => taskManager.currentError.value?.message || '发生未知错误',
+          default: () => taskManager.currentError.value?.message || getUIString('unknownError'),
           actions: () => <button
             onClick={() => taskManager.showErrorModal.value = false}
           >
-            确定
+            {getUIString('confirm')}
           </button>,
         }}</Modal>
       </>

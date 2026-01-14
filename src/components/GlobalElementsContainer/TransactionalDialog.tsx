@@ -1,5 +1,6 @@
 import Modal from '../Modal';
 import { defineComponent, PropType, ref, computed } from 'vue';
+import { getUIString } from '../../i18n';
 
 const show = ref(false);
 const titleRef = ref('');
@@ -9,7 +10,8 @@ const buttons = ref<{ text: string, action: any, danger?: boolean }[]>([]);
 let resolve: (value: any) => void = () => {
 };
 
-export function showTransactionalDialog<T>(title: string, message: string, actions: { text: string, action: T, danger?: boolean }[] = [{ text: '确认', action: Symbol() as any }], warning = false): Promise<T> {
+export function showTransactionalDialog<T>(title: string, message: string, actions?: { text: string, action: T, danger?: boolean }[], warning = false): Promise<T> {
+  actions = actions || [{ text: getUIString('confirm'), action: Symbol() as any }];
   titleRef.value = title;
   text.value = message;
   buttons.value = actions;
