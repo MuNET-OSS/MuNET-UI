@@ -1,5 +1,22 @@
 import { computed, ComputedRef, toValue, MaybeRefOrGetter } from 'vue';
-import type { ThemeLayer, StylesModule } from './types';
+import type { StylesModule, ThemeLayer } from './types';
+
+export function mergeStyles(...styles: StylesModule[]): StylesModule {
+  const result: Record<string, string[]> = {};
+  for (const style of styles) {
+    for (let [key, value] of Object.entries(style)) {
+      if (typeof value === 'string') {
+        value = [value];
+      }
+      if (result[key]) {
+        result[key].push(...value);
+      } else {
+        result[key] = [...value];
+      }
+    }
+  }
+  return result;
+}
 
 /**
  * 合并多层主题的样式
@@ -12,30 +29,7 @@ import type { ThemeLayer, StylesModule } from './types';
 export function composeThemeStyles(
   ...layers: MaybeRefOrGetter<ThemeLayer | undefined>[]
 ): ComputedRef<StylesModule> {
-  return computed(() => {
-    const result: StylesModule = {};
-    const keyMap = new Map<string, string[]>();
-
-    // 收集所有层的样式（使用 toValue 自动解包 ref/computed/getter）
-    for (const layerRef of layers) {
-      const layer = toValue(layerRef);
-      if (!layer) continue;
-
-      for (const [key, className] of Object.entries(layer.styles)) {
-        if (!keyMap.has(key)) {
-          keyMap.set(key, []);
-        }
-        keyMap.get(key)!.push(className);
-      }
-    }
-
-    // 合并：同 key 的类名用空格连接
-    for (const [key, classNames] of keyMap.entries()) {
-      result[key] = classNames.join(' ');
-    }
-
-    return result;
-  });
+  return computed(() => mergeStyles(...layers.map(layerRef => toValue(layerRef)).filter(layer => layer && layer.styles).map(layer => layer!.styles)));
 }
 
 /**

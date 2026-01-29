@@ -45,3 +45,6 @@ export { foregroundTask } from './components/GlobalElementsContainer/ForegroundT
 export { showTransactionalDialog } from './components/GlobalElementsContainer/TransactionalDialog';
 export { taskManager } from './components/GlobalElementsContainer/TaskManager';
 
+
+export { mergeStyles } from './themes/base/composer';
+

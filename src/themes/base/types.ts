@@ -4,7 +4,7 @@ import { ComputedRef } from 'vue';
  * CSS Modules 导出的样式对象
  * key: 样式名, value: 哈希后的类名
  */
-export type StylesModule = Record<string, string>;
+export type StylesModule = Record<string, string | string[]>;
 
 /**
  * 主题层
