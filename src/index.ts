@@ -33,6 +33,7 @@ export { default as TransitionOpacity } from './components/TransitionOpacity';
 
 // 新迁移的组件
 export { default as DropMenu } from './components/DropMenu';
+export { default as DropDown } from './components/DropMenu/DropDown';
 export { default as GlobalElementsContainer } from './components/GlobalElementsContainer';
 export { default as ScrollText } from './components/ScrollText';
 export { default as WhateverNaviBar } from './components/SubNaviBar/WhateverNaviBar';
