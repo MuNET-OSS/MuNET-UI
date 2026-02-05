@@ -11,6 +11,7 @@ const props = withDefaults(defineProps<{
   thumbColor?: string
   trackColor?: string
   trackValueColor?: string
+  origin?: number // 基准值，深色区域从这里开始延伸到当前值，默认为 min
 }>(), {
   min: 0,
   max: 100,
@@ -19,6 +20,7 @@ const props = withDefaults(defineProps<{
   thumbColor: '#9090906e',
   trackColor: 'gray',
   trackValueColor: 'red',
+  origin: undefined,
 })
 
 const modelValue = defineModel<number>({ required: true })
@@ -26,6 +28,7 @@ const modelValue = defineModel<number>({ required: true })
 const scaledMin = computed(() => props.min * 10000)
 const scaledMax = computed(() => props.max * 10000)
 const scaledStep = computed(() => props.step * 10000)
+const effectiveOrigin = computed(() => props.origin ?? props.min)
 
 const sliderRef = ref<HTMLInputElement>()
 const sliderValue = computed({
@@ -38,16 +41,33 @@ const sliderValue = computed({
 
 onMounted(() => updateTrackColor())
 watch(sliderValue, () => updateTrackColor(), { immediate: true })
-watch([scaledMin, scaledMax, scaledStep], () => updateTrackColor(), { immediate: true })
+watch([scaledMin, scaledMax, scaledStep, effectiveOrigin], () => updateTrackColor(), { immediate: true })
 
 function updateTrackColor() {
   if (!sliderRef.value) {
     return
   }
 
+  const min = props.min
+  const max = props.max
+  const value = modelValue.value
+  const origin = effectiveOrigin.value
+
   sliderRef.value.style.setProperty('--value', sliderValue.value.toString())
-  sliderRef.value.style.setProperty('--min', !sliderRef.value.min ? props.min.toString() : sliderRef.value.min)
-  sliderRef.value.style.setProperty('--max', !sliderRef.value.max ? props.max.toString() : sliderRef.value.max)
+  sliderRef.value.style.setProperty('--min', min.toString())
+  sliderRef.value.style.setProperty('--max', max.toString())
+  
+  // 计算 origin 和 value 在滑块上的位置百分比
+  const range = max - min
+  const originRatio = (origin - min) / range
+  const valueRatio = (value - min) / range
+  
+  // 深色区域的起始和结束位置
+  const fillStart = Math.min(originRatio, valueRatio)
+  const fillEnd = Math.max(originRatio, valueRatio)
+  
+  sliderRef.value.style.setProperty('--fill-start', `${fillStart * 100}%`)
+  sliderRef.value.style.setProperty('--fill-end', `${fillEnd * 100}%`)
 }
 
 function handleInput(e: Event) {
@@ -109,6 +129,9 @@ https://toughengineer.github.io/demo/slider-styler*/
   --range: calc(var(--max) - var(--min));
   --ratio: calc((var(--value) - var(--min)) / var(--range));
   --sx: calc(0.5 * 0em + var(--ratio) * (100% - 0em));
+  /* 支持 origin 基准值：深色区域从 fill-start 到 fill-end */
+  --fill-start: 0%;
+  --fill-end: var(--sx);
 }
 
 .form_input-range:focus {
@@ -172,21 +195,34 @@ https://toughengineer.github.io/demo/slider-styler*/
   /* margin-left: var(--track-value-padding); */
   margin-right: calc(0 - var(--track-value-padding));
   background:
-    linear-gradient(var(--track-value-background), var(--track-value-background)) 0 / var(--sx) 100% no-repeat,
+    linear-gradient(to right,
+      transparent var(--fill-start),
+      var(--track-value-background) var(--fill-start),
+      var(--track-value-background) var(--fill-end),
+      transparent var(--fill-end)
+    ),
     var(--track-background);
 }
 
 .form_input-range.slider-progress:hover::-webkit-slider-runnable-track {
   background:
-    linear-gradient(var(--track-value-background-hover), var(--track-value-background-hover)) 0 / var(--sx) 100%
-    no-repeat,
+    linear-gradient(to right,
+      transparent var(--fill-start),
+      var(--track-value-background-hover) var(--fill-start),
+      var(--track-value-background-hover) var(--fill-end),
+      transparent var(--fill-end)
+    ),
     var(--track-background-hover);
 }
 
 .form_input-range.slider-progress:active::-webkit-slider-runnable-track {
   background:
-    linear-gradient(var(--track-value-background-active), var(--track-value-background-active)) 0 / var(--sx) 100%
-    no-repeat,
+    linear-gradient(to right,
+      transparent var(--fill-start),
+      var(--track-value-background-active) var(--fill-start),
+      var(--track-value-background-active) var(--fill-end),
+      transparent var(--fill-end)
+    ),
     var(--track-background-active);
 }
 
@@ -241,21 +277,34 @@ https://toughengineer.github.io/demo/slider-styler*/
 
 .form_input-range.slider-progress::-moz-range-track {
   background:
-    linear-gradient(var(--track-value-background), var(--track-value-background)) 0 / var(--sx) 100% no-repeat,
+    linear-gradient(to right,
+      transparent var(--fill-start),
+      var(--track-value-background) var(--fill-start),
+      var(--track-value-background) var(--fill-end),
+      transparent var(--fill-end)
+    ),
     var(--track-background);
 }
 
 .form_input-range.slider-progress:hover::-moz-range-track {
   background:
-    linear-gradient(var(--track-value-background-hover), var(--track-value-background-hover)) 0 / var(--sx) 100%
-    no-repeat,
+    linear-gradient(to right,
+      transparent var(--fill-start),
+      var(--track-value-background-hover) var(--fill-start),
+      var(--track-value-background-hover) var(--fill-end),
+      transparent var(--fill-end)
+    ),
     var(--track-background-hover);
 }
 
 .form_input-range.slider-progress:active::-moz-range-track {
   background:
-    linear-gradient(var(--track-value-background-active), var(--track-value-background-active)) 0 / var(--sx) 100%
-    no-repeat,
+    linear-gradient(to right,
+      transparent var(--fill-start),
+      var(--track-value-background-active) var(--fill-start),
+      var(--track-value-background-active) var(--fill-end),
+      transparent var(--fill-end)
+    ),
     var(--track-background-active);
 }
 
