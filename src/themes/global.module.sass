@@ -38,14 +38,19 @@
       opacity: .7
       cursor: not-allowed
 
-    &:not(:disabled)
+    &:not(:disabled):not(.noTransform)
       &:hover
-        opacity: 1
         transform: scale(1.02)
 
       &:active
-        opacity: 1
         transform: scale(0.95)
+
+    &:not(:disabled)
+      &:hover
+        opacity: 1
+
+      &:active
+        opacity: 1
 
   // 下拉框基础样式结构
   select
