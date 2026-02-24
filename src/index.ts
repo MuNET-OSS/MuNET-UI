@@ -30,6 +30,7 @@ export type { SelectOption, SelectExposed, SelectInstance } from './components/S
 export { default as TransitionVertical } from './components/TransitionVertical.vue';
 export { default as Range } from './components/Range.vue';
 export { default as TransitionOpacity } from './components/TransitionOpacity';
+export { default as Tabs, TabPane } from './components/Tabs';
 
 // 新迁移的组件
 export { default as DropMenu } from './components/DropMenu';
@@ -38,7 +39,9 @@ export { default as GlobalElementsContainer } from './components/GlobalElementsC
 export { default as ScrollText } from './components/ScrollText';
 export { default as WhateverNaviBar } from './components/SubNaviBar/WhateverNaviBar';
 export { default as WarningBackground } from './components/WarningBackground';
+export { default as Popover } from './components/Popover';
 export type { NaviItem } from './components/SubNaviBar/WhateverNaviBar';
+export { default as Progress } from './components/Progress';
 
 // 导出 GlobalElementsContainer 的子组件和 hooks
 export { foregroundTask } from './components/GlobalElementsContainer/ForegroundTask';
@@ -47,4 +50,3 @@ export { taskManager } from './components/GlobalElementsContainer/TaskManager';
 
 
 export { mergeStyles } from './themes/base/composer';
-
