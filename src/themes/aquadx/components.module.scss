@@ -167,6 +167,7 @@ body:has(.root) {
     }
 
     :not(.active) {
+
       a:hover:not(.active),
       div:hover:not(.active) {
         background: #2c2c2c;
@@ -196,3 +197,20 @@ body:has(.root) {
   --fl-bg: rgba(255, 255, 255, 0.15);
 }
 
+/* 列表项样式 */
+.listItemHover {
+  --at-apply: transition-colors;
+
+  &:hover {
+    background-color: #282828;
+  }
+}
+
+.listItemSelect,
+.listItemActive:active:hover {
+  background-color: #333;
+}
+
+.listItemDark { // 因为默认暗色模式是不需要 listItem 背景色的，但是有些地方有背景图片就得上一个背景色
+  background-color: #222222cc;
+}

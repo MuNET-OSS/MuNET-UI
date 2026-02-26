@@ -191,12 +191,14 @@ body:has(.root) {
 
   /** 子导航栏 */
   .subNaviBar {
+
     >a:hover:not(.active):not(.disabled),
     div:hover:not(.active):not(.disabled) {
       background: oklch(0.95 0.01 var(--hue));
     }
 
     :not(.active):not(.disabled) {
+
       a:hover:not(.active):not(.disabled),
       div:hover:not(.active):not(.disabled) {
         background: oklch(0.95 0.01 var(--hue));
@@ -219,3 +221,26 @@ body:has(.root) {
   --fl-bg: oklch(0.5 0.16 var(--hue) / 15%);
 }
 
+/* 列表项样式 */
+.listItem {
+  background-color: oklch(0.97 0.01 var(--hue));
+}
+
+.listItemAlt {
+  background-color: oklch(0.96 0.012 var(--hue));
+}
+
+.listItemHover {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+
+  &:hover {
+    background-color: oklch(0.95 0.02 var(--hue));
+  }
+}
+
+.listItemSelect,
+.listItemActive:active:hover {
+  background-color: oklch(0.92 0.04 var(--hue)) !important;
+}
