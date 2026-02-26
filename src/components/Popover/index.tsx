@@ -60,7 +60,7 @@ export default defineComponent({
         );
       }
 
-      const preferredLeft = triggerRect.left;
+      const preferredLeft = triggerRect.left + (triggerRect.width - popoverRect.width) / 2;
       left.value = Math.min(
         Math.max(8, preferredLeft),
         Math.max(8, viewportWidth - popoverRect.width - 8),

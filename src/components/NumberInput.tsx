@@ -10,6 +10,7 @@ export default defineComponent({
     step: { type: Number, default: 1 },
     decimal: { type: Number, default: 0 },
     value: { type: Number, default: 0 },
+    onFocus: Function as PropType<() => void>,
   },
   setup(props, { emit }) {
     const value = useVModel(props, 'value', emit);
@@ -33,6 +34,6 @@ export default defineComponent({
       refresh();
     }, { immediate: true });
 
-    return () => <TextInput ref={inputRef} v-model:value={wrap.value} type="number" step={props.step} onBlur={refresh} onEnterPressed={refresh} />;
+    return () => <TextInput ref={inputRef} v-model:value={wrap.value} type="number" step={props.step} onBlur={refresh} onEnterPressed={refresh} onFocus={props.onFocus} />;
   },
 });
