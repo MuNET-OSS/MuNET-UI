@@ -1,6 +1,6 @@
 {
   "name": "@munet/ui",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "type": "module",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
@@ -9,7 +9,8 @@
     ".": "./src/index.ts",
     "./themes": "./src/themes/index.ts",
     "./components/*": "./src/components/*/index.ts",
-    "./controllers/*": "./src/controllers/*.ts"
+    "./controllers/*": "./src/controllers/*.ts",
+    "./uno.css": "./src/uno.css"
   },
   "publishConfig": {
     "main": "./dist/index.js",
@@ -31,7 +32,8 @@
       "./controllers/*": {
         "import": "./dist/controllers/*.js",
         "types": "./dist/controllers/*.d.ts"
-      }
+      },
+      "./uno.css": "./dist/__uno.css"
     }
   },
   "files": [
@@ -50,12 +52,14 @@
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.12",
+    "@unocss/preset-wind3": "^66.3.3",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vitejs/plugin-vue-jsx": "^5.0.1",
     "@vueuse/core": "^13.5.0",
     "lodash-es": "^4.17.21",
     "sass": "^1.89.2",
     "typescript": "^5.8.3",
+    "unocss": "^66.3.3",
     "vite": "^7.0.2",
     "vue": "^3.5.17"
   }

@@ -1,5 +1,5 @@
 // @munet/ui - 核心 UI 组件库
-
+import 'virtual:uno.css';
 // 导出主题系统
 export * from './themes';
 
