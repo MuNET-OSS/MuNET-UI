@@ -15,19 +15,19 @@ export default defineComponent({
   setup(props, { emit, slots }) {
     const getVariantClass = () => {
       if (props.danger) {
-        if (props.variant === 'primary') {
-          return 'bg-red-600! border-red-600! text-white!';
-        }
-        return 'text-red-600! border-red-600!';
+        // if (props.variant === 'primary') {
+        //   return 'bg-red-600! border-red-600! text-white!';
+        // }
+        return 'text-red-4 hover:bg-red-4/10!';
       }
 
       switch (props.variant) {
-        case 'primary':
-          return 'bg-[var(--link-color)]! border-[var(--link-color)]! text-white!';
-        case 'secondary':
-          return 'bg-transparent! border-[var(--link-color)]! text-[var(--link-color)]!';
-        case 'ghost':
-          return 'bg-transparent! border-transparent! text-[var(--link-color)]! hover:bg-[var(--link-color)]/12! active:bg-[var(--link-color)]/18!';
+        // case 'primary':
+        //   return 'bg-[var(--link-color)]! border-[var(--link-color)]! text-white!';
+        // case 'secondary':
+        //   return 'bg-transparent! border-[var(--link-color)]! text-[var(--link-color)]!';
+        // case 'ghost':
+        //   return 'bg-transparent! border-transparent! text-[var(--link-color)]! hover:bg-[var(--link-color)]/12! active:bg-[var(--link-color)]/18!';
         default:
           return '';
       }

@@ -1,4 +1,4 @@
-import { defineComponent, PropType, ref, computed, inject, Ref, VNode } from 'vue';
+import { defineComponent, PropType, ref, computed, inject, Ref, VNode, Teleport, CSSProperties } from 'vue';
 import { useVModel, onClickOutside } from '@vueuse/core';
 import styles from './style.module.sass';
 import { theme } from '../../themes';
@@ -37,6 +37,8 @@ const Select = defineComponent({
     const isOpen = ref(false);
     const selectRef = ref<HTMLDivElement | null>(null);
     const dropdownPosition = ref<'bottom' | 'top'>('bottom');
+    const dropdownRef = ref<HTMLDivElement | null>(null);
+    const dropdownStyle = ref<CSSProperties>({});
 
     const selectedOption = computed(() => {
       return props.options.find(opt => opt.value === value.value);
@@ -54,20 +56,24 @@ const Select = defineComponent({
 
     const updateDropdownPosition = () => {
       if (!selectRef.value) return;
-
       const rect = selectRef.value.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
       const spaceBelow = viewportHeight - rect.bottom;
       const spaceAbove = rect.top;
-
-      // 下拉菜单最大高度 (与 CSS 中的 max-height 保持一致)
       const dropdownMaxHeight = 500;
-
-      // 如果下方空间不足且上方空间更充足，则向上展开
+      const hue = getComputedStyle(selectRef.value).getPropertyValue('--hue');
+      const baseStyle: CSSProperties = {
+        position: 'fixed',
+        left: `${rect.left}px`,
+        width: `${rect.width}px`,
+        '--hue': hue,
+      } as CSSProperties;
       if (spaceBelow < dropdownMaxHeight && spaceAbove > spaceBelow) {
         dropdownPosition.value = 'top';
+        dropdownStyle.value = { ...baseStyle, bottom: `${viewportHeight - rect.top + 8}px` };
       } else {
         dropdownPosition.value = 'bottom';
+        dropdownStyle.value = { ...baseStyle, top: `${rect.bottom + 8}px` };
       }
     };
 
@@ -88,7 +94,7 @@ const Select = defineComponent({
 
     onClickOutside(selectRef, () => {
       isOpen.value = false;
-    });
+    }, { ignore: [dropdownRef] });
 
     expose<SelectExposed>({
       open: () => {
@@ -120,34 +126,40 @@ const Select = defineComponent({
           <span class={[styles.arrow, isOpen.value && styles.arrowOpen, 'i-solar:alt-arrow-down-linear']} />
         </div>
 
-        <TransitionVertical>
-          {isOpen.value && (
-            <div class={[
-              styles.dropdown,
-              'bg-dropMenu backdrop-blur-8',
-              dropdownPosition.value === 'top' && styles.dropdownTop
-            ]}>
-              {props.options.length === 0 ? (
-                <div class={styles.empty}>暂无选项</div>
-              ) : (
-                props.options.map((option) => (
-                  <div
-                    key={option.value}
-                    class={[
-                      styles.option,
-                      'bg-avatarMenuButton',
-                      option.value === value.value && styles.selected,
-                      option.disabled && styles.optionDisabled,
-                    ]}
-                    onClick={() => selectOption(option)}
-                  >
-                    {renderLabel(option.label)}
-                  </div>
-                ))
-              )}
-            </div>
-          )}
-        </TransitionVertical>
+        <Teleport to="body">
+          <TransitionVertical>
+            {isOpen.value && (
+              <div
+                ref={dropdownRef}
+                class={[
+                  styles.dropdown,
+                  'bg-dropMenu backdrop-blur-8',
+                  dropdownPosition.value === 'top' && styles.dropdownTop
+                ]}
+                style={dropdownStyle.value}
+              >
+                {props.options.length === 0 ? (
+                  <div class={styles.empty}>暂无选项</div>
+                ) : (
+                  props.options.map((option) => (
+                    <div
+                      key={option.value}
+                      class={[
+                        styles.option,
+                        'bg-avatarMenuButton',
+                        option.value === value.value && styles.selected,
+                        option.disabled && styles.optionDisabled,
+                      ]}
+                      onClick={() => selectOption(option)}
+                    >
+                      {renderLabel(option.label)}
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+          </TransitionVertical>
+        </Teleport>
       </div>
     );
   },

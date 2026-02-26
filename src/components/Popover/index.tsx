@@ -6,7 +6,8 @@ import {
   PropType,
   ref,
   Teleport,
-} from 'vue';
+  } from 'vue';
+import TransitionOpacity from '../TransitionOpacity';
 
 type TriggerType = 'hover' | 'click';
 
@@ -141,17 +142,19 @@ export default defineComponent({
         </div>
 
         <Teleport to="#app">
-          {isOpen.value && (
-            <div
-              ref={popoverRef}
-              class="fixed z-80 max-w-90vw rd-2 bg-dropMenu p-2 text-sm shadow-lg backdrop-blur-8"
-              style={{ top: `${top.value}px`, left: `${left.value}px` }}
-              onMouseenter={() => isHoverTrigger.value && clearHideTimer()}
-              onMouseleave={() => isHoverTrigger.value && scheduleClose()}
-            >
-              {slots.default?.()}
-            </div>
-          )}
+          <TransitionOpacity>
+            {isOpen.value && (
+              <div
+                ref={popoverRef}
+                class="fixed z-80 max-w-90vw rd-2 bg-dropMenu p-2 text-sm backdrop-blur-8"
+                style={{ top: `${top.value}px`, left: `${left.value}px` }}
+                onMouseenter={() => isHoverTrigger.value && clearHideTimer()}
+                onMouseleave={() => isHoverTrigger.value && scheduleClose()}
+              >
+                {slots.default?.()}
+              </div>
+            )}
+          </TransitionOpacity>
         </Teleport>
       </>
     );
