@@ -28,7 +28,7 @@ const isOklchSupport = CSS.supports("color", "oklch(0.5 0.1 200)");
 
 // 主题配置
 export const selectedThemeName = useStorage('theme', UIThemes.Auto);
-export const selectedThemeHue = useStorage('theme-hue', 300);
+export const selectedThemeHue = useStorage<number>('theme-hue', null as any);
 
 const preferDark = usePreferredDark();
 
@@ -88,6 +88,19 @@ export function registerAppTheme(uiTheme: number, appTheme: ThemeLayer) {
  */
 export function clearAppThemes() {
   appThemeRegistry.value.clear();
+}
+
+/**
+ * 初始化主题默认值（在应用入口调用）
+ * 仅在值未设置时生效，不会覆盖用户已有的选择
+ */
+export function initThemeDefaults(defaults: { hue?: number; theme?: UIThemes } = {}) {
+  if (selectedThemeHue.value == null) {
+    selectedThemeHue.value = defaults.hue ?? 300;
+  }
+  if (defaults.theme != null && selectedThemeName.value == null) {
+    selectedThemeName.value = defaults.theme;
+  }
 }
 
 // 当前业务主题层
