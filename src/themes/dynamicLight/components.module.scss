@@ -139,6 +139,7 @@ body:has(.root) {
 
   /* ========== UI 组件样式类 ========== */
 
+  --select-selected-text-c: oklch(0.68 0.17 var(--hue));
   /** 文本输入框 */
   .textInput {
     --border-hover-c: oklch(0.68 0.17 var(--hue));

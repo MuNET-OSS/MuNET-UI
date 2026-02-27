@@ -126,7 +126,7 @@ const Select = defineComponent({
           <span class={[styles.arrow, isOpen.value && styles.arrowOpen, 'i-solar:alt-arrow-down-linear']} />
         </div>
 
-        <Teleport to="body">
+        <Teleport to="#app">
           <TransitionVertical>
             {isOpen.value && (
               <div

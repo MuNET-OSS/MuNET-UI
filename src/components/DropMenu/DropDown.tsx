@@ -91,7 +91,7 @@ export default defineComponent({
         {slots.trigger ? slots.trigger(toggle) :
           <Button ing={props.buttonIng} onClick={() => toggle()}>{props.buttonText}</Button>}
       </div>
-      <Teleport to="body">
+      <Teleport to="#app">
         <TransitionVertical>
           {show.value &&
             <div
