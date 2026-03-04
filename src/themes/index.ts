@@ -134,7 +134,9 @@ export const themeClasses = composeThemeRoots(
 // 初始化色调
 const cssHue = useCssVar('--hue', document.body);
 watch(selectedThemeHue, (newVal) => {
-  cssHue.value = newVal.toString();
+  if (newVal != null) {
+    cssHue.value = newVal.toString();
+  }
 }, { immediate: true });
 
 // 辅助变量

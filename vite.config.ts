@@ -30,6 +30,7 @@ function cssInjector(outDir: string): Plugin {
         // 找对应的 JS 文件
         const candidates = [
           resolve(dir, name.replace(/\.css$/, '.js')),
+          resolve(dir, name.replace(/\.css$/, '.vue.js')),
           resolve(dir, name.replace(/\.module\.css$/, '.module.sass.js')),
           resolve(dir, name.replace(/\.module\.css$/, '.module.scss.js')),
         ];
