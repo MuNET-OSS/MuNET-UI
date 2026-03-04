@@ -27,6 +27,7 @@ const TextInput = defineComponent({
     onEnterPressed: Function as PropType<() => void>,
     onBlur: Function as PropType<() => void>,
     onFocus: Function as PropType<() => void>,
+    innerClass: { type: String, default: 'min-h-12 cst' },
   },
   setup(props, { emit, expose }) {
     const value = useVModel(props, 'value', emit);
@@ -88,9 +89,9 @@ const TextInput = defineComponent({
 
     return () => <div class={['flex', styles.wrapper, theme.value.textInput, disabled.value && styles.disabled]}>
       {props.textarea ?
-        <textarea ref={inputRef} v-model={value.value} placeholder={props.placeholder} disabled={disabled.value} onBlur={props.onBlur} onFocus={props.onFocus} style={{ height: props.height }} class="min-h-12 cst" />
+        <textarea ref={inputRef} v-model={value.value} placeholder={props.placeholder} disabled={disabled.value} onBlur={props.onBlur} onFocus={props.onFocus} style={{ height: props.height }} class={props.innerClass} />
         :
-        <input ref={inputRef} v-model={value.value} type={props.type} placeholder={props.placeholder} disabled={disabled.value} onBlur={props.onBlur} onFocus={props.onFocus} onKeypress={onKeyPress} class="min-h-12" step={props.step} />
+        <input ref={inputRef} v-model={value.value} type={props.type} placeholder={props.placeholder} disabled={disabled.value} onBlur={props.onBlur} onFocus={props.onFocus} onKeypress={onKeyPress} class={props.innerClass} step={props.step} />
       }
       {props.limit && <div style={{ right: limitTextRight.value }} class={['absolute bottom-1 text-2.5 op-60 pointer-events-none transition-right', isLimitExceeded.value && 'c-red-5 font-bold']}>
         {props.limit - (value.value?.length || 0)}
