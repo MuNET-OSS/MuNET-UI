@@ -1,5 +1,6 @@
 // @munet/ui 简单 i18n 系统
 // 用于 UI 组件中的核心字符串
+import { ref, computed, type Ref } from 'vue';
 
 export interface UIStrings {
   confirm: string;
@@ -15,7 +16,7 @@ const defaultStrings: UIStrings = {
   unknownError: '发生未知错误',
 };
 
-let currentStrings: UIStrings = { ...defaultStrings };
+const uiStrings = ref<UIStrings>({ ...defaultStrings });
 
 /**
  * 配置 UI 字符串（用于 i18n）
@@ -24,7 +25,7 @@ let currentStrings: UIStrings = { ...defaultStrings };
  * ```ts
  * import { configureUIStrings } from '@munet/ui';
  * import { t } from './locales';
- * 
+ *
  * configureUIStrings({
  *   confirm: t('common.confirm'),
  *   cancel: t('common.cancel'),
@@ -32,13 +33,14 @@ let currentStrings: UIStrings = { ...defaultStrings };
  * ```
  */
 export function configureUIStrings(strings: Partial<UIStrings>) {
-  currentStrings = { ...currentStrings, ...strings };
+  Object.assign(uiStrings.value, strings);
 }
 
 /**
- * 获取 UI 字符串
+ * 获取 UI 字符串（响应式）
  * @param key 字符串键名
+ * @returns Ref<string> 响应式字符串引用
  */
-export function getUIString(key: keyof UIStrings): string {
-  return currentStrings[key];
+export function getUIString<K extends keyof UIStrings>(key: K): Ref<string> {
+  return computed(() => uiStrings.value[key]);
 }
