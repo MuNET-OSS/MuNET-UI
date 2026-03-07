@@ -10,6 +10,7 @@ export default defineComponent({
     step: { type: Number, default: 1 },
     decimal: { type: Number, default: 0 },
     value: { type: Number, default: 0 },
+    onChange: Function as PropType<() => void>,
     onFocus: Function as PropType<() => void>,
   },
   setup(props, { emit }) {
@@ -23,8 +24,12 @@ export default defineComponent({
       },
     });
     const refresh = ()=>{
-      display.value = value.value.toFixed(props.decimal);
+      display.value = (value.value ?? 0).toFixed(props.decimal);
     }
+    const commitChange = () => {
+      refresh();
+      props.onChange?.();
+    };
     const inputRef = shallowRef<TextInputInstance>();
     watch(()=>props.value, ()=>{
       if(inputRef?.value?.focused){
@@ -34,6 +39,6 @@ export default defineComponent({
       refresh();
     }, { immediate: true });
 
-    return () => <TextInput ref={inputRef} v-model:value={wrap.value} type="number" step={props.step} onBlur={refresh} onEnterPressed={refresh} onFocus={props.onFocus} />;
+    return () => <TextInput ref={inputRef} v-model:value={wrap.value} type="number" step={props.step} onBlur={commitChange} onEnterPressed={commitChange} onFocus={props.onFocus} />;
   },
 });
