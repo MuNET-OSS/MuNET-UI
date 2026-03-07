@@ -7,6 +7,8 @@ export interface UIStrings {
   cancel: string;
   taskFailed: string;
   unknownError: string;
+  selectPlaceholder: string;
+  selectEmpty: string;
 }
 
 const defaultStrings: UIStrings = {
@@ -14,6 +16,8 @@ const defaultStrings: UIStrings = {
   cancel: '取消',
   taskFailed: '任务执行失败',
   unknownError: '发生未知错误',
+  selectPlaceholder: '请选择',
+  selectEmpty: '暂无选项',
 };
 
 const uiStrings = ref<UIStrings>({ ...defaultStrings });

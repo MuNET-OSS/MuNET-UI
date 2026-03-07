@@ -4,6 +4,7 @@ import styles from './style.module.sass';
 import { theme } from '../../themes';
 import TransitionVertical from '../TransitionVertical.vue';
 import { JSX } from 'vue/jsx-runtime';
+import { getUIString } from '../../i18n';
 
 export interface SelectOption {
   label: string | number | (() => VNode | string | number | JSX.Element);
@@ -25,7 +26,7 @@ const Select = defineComponent({
     },
     placeholder: {
       type: String,
-      default: '请选择',
+      default: undefined,
     },
     disabled: Boolean,
     onChange: Function as PropType<(value: any) => void>,
@@ -39,6 +40,8 @@ const Select = defineComponent({
     const dropdownPosition = ref<'bottom' | 'top'>('bottom');
     const dropdownRef = ref<HTMLDivElement | null>(null);
     const dropdownStyle = ref<CSSProperties>({});
+    const placeholderText = getUIString('selectPlaceholder');
+    const emptyText = getUIString('selectEmpty');
 
     const selectedOption = computed(() => {
       return props.options.find(opt => opt.value === value.value);
@@ -49,7 +52,7 @@ const Select = defineComponent({
     };
 
     const displayText = computed(() => {
-      if (!selectedOption.value) return props.placeholder;
+      if (!selectedOption.value) return props.placeholder ?? placeholderText.value;
       const label = selectedOption.value.label;
       return typeof label === 'function' ? label() : label;
     });
@@ -139,7 +142,7 @@ const Select = defineComponent({
                 style={dropdownStyle.value}
               >
                 {props.options.length === 0 ? (
-                  <div class={styles.empty}>暂无选项</div>
+                  <div class={styles.empty}>{emptyText.value}</div>
                 ) : (
                   props.options.map((option) => (
                     <div
