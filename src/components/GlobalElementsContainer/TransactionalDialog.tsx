@@ -11,7 +11,7 @@ let resolve: (value: any) => void = () => {
 };
 
 export function showTransactionalDialog<T>(title: string, message: string, actions?: { text: string, action: T, danger?: boolean }[], warning = false): Promise<T> {
-  actions = actions || [{ text: getUIString('confirm'), action: Symbol() as any }];
+  actions = actions || [{ text: getUIString('confirm').value, action: Symbol() as any }];
   titleRef.value = title;
   text.value = message;
   buttons.value = actions;

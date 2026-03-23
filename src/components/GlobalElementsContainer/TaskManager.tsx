@@ -116,15 +116,15 @@ export default defineComponent({
         </div>
 
         <Modal
-          title={getUIString('taskFailed')}
+          title={getUIString('taskFailed').value}
           width="400px"
           v-model:show={taskManager.showErrorModal.value}
         >{{
-          default: () => taskManager.currentError.value?.message || getUIString('unknownError'),
+          default: () => taskManager.currentError.value?.message || getUIString('unknownError').value,
           actions: () => <button
             onClick={() => taskManager.showErrorModal.value = false}
           >
-            {getUIString('confirm')}
+            {getUIString('confirm').value}
           </button>,
         }}</Modal>
       </>
