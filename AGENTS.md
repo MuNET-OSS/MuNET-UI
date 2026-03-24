@@ -2,15 +2,15 @@
 
 ## 概览
 
-`@munet/ui` - 通用 UI 组件库，1918 行代码，14 个组件，三层主题架构。
+`@munet/ui` - 通用 UI 组件库，defineComponent + JSX，三层主题架构。
 
 ## 结构
 
 ```
 packages/ui/src/
 ├── index.ts               # 主入口，导出所有组件和控制器
-├── components/            # 基础组件（14个）
-│   ├── Button/
+├── components/            # 基础组件
+│   ├── Button/            # 按钮（ing/variant/danger/size）
 │   ├── TextInput/
 │   ├── CheckBox/
 │   ├── Radio/
@@ -18,6 +18,9 @@ packages/ui/src/
 │   ├── Modal/
 │   ├── Section/
 │   ├── Window/
+│   ├── Tabs/              # 选项卡
+│   ├── Popover/           # 弹出层
+│   ├── Progress/          # 进度条
 │   └── ...
 ├── controllers/           # 全局控制器
 │   └── toastController.ts
@@ -34,8 +37,8 @@ packages/ui/src/
 ## 核心组件
 
 ### 表单组件
-- **Button** - 按钮，支持 `ing` 加载状态
-- **TextInput** - 文本输入框，支持 v-model
+- **Button** - 按钮，支持 `ing` 加载状态、`variant`（primary/secondary）、`danger`、`size`
+- **TextInput** - 文本输入框，支持 v-model、`innerClass` 自定义内部样式
 - **CheckBox** - 复选框
 - **FlagCheckBox** - 位标志复选框（用于隐私设置）
 - **Radio** - 单选框
@@ -47,12 +50,15 @@ packages/ui/src/
 - **Modal** - 模态框，支持多层堆叠
 - **Window** - 窗口容器
 - **Section** - 可折叠区块
+- **Tabs** - 选项卡切换
 - **DropMenu/DropDown** - 下拉菜单
+- **Popover** - 弹出提示层
 
 ### 展示组件
 - **DateFormat** - 日期格式化
 - **Qrcode** - 二维码生成
 - **ScrollText** - 滚动文本
+- **Progress** - 进度条
 - **WarningBackground** - 警告背景
 
 ### 动画组件
