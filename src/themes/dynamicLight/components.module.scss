@@ -89,7 +89,7 @@ body:has(.root) {
     background: oklch(0.8 0.02 var(--hue) / 20%);
   }
 
-  :global(.bg-avatarMenuButton):hover {
+  :global(.bg-avatarMenuButton):hover, .badge {
     background: oklch(0.6 0.1 var(--hue) / 15%);
   }
 

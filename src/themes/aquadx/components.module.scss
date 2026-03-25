@@ -81,7 +81,7 @@ body:has(.root) {
     background: #3a3a3acc;
   }
 
-  :global(.bg-avatarMenuButton):hover {
+  :global(.bg-avatarMenuButton):hover, .badge {
     background: #ffffff11;
   }
 
