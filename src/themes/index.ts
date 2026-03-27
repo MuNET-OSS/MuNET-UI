@@ -15,7 +15,7 @@ export * from './base/composer';
 export enum UIThemes {
   Auto,
   DynamicLight,
-  AquaDX,
+  Dark,
 }
 
 // 全局主题层（跨主题共享）
@@ -34,11 +34,11 @@ const preferDark = usePreferredDark();
 
 export const realThemeName = computed<number>(() => {
   if (!isOklchSupport) {
-    return UIThemes.AquaDX;
+    return UIThemes.Dark;
   }
 
   if (selectedThemeName.value === UIThemes.Auto) {
-    return preferDark.value ? UIThemes.AquaDX : UIThemes.DynamicLight;
+    return preferDark.value ? UIThemes.Dark : UIThemes.DynamicLight;
   }
   return selectedThemeName.value;
 });
@@ -51,7 +51,7 @@ const emptyLayer: ThemeLayer = {
 // 当前 UI 主题层
 const currentUITheme = computed<ThemeLayer>(() => {
   switch (realThemeName.value) {
-    case UIThemes.AquaDX:
+    case UIThemes.Dark:
       return aquadxUI;
     case UIThemes.DynamicLight:
       return dynamicLightUI;
@@ -63,7 +63,7 @@ const currentUITheme = computed<ThemeLayer>(() => {
 // 当前主题变量
 export const currentThemeVars = computed(() => {
   switch (realThemeName.value) {
-    case UIThemes.AquaDX:
+    case UIThemes.Dark:
       return aquadxVars;
     case UIThemes.DynamicLight:
     default:
@@ -106,12 +106,12 @@ export function initThemeDefaults(defaults: { hue?: number; theme?: UIThemes } =
 // 当前业务主题层
 const currentAppTheme = computed<ThemeLayer | undefined>(() => {
   if (!isOklchSupport) {
-    return appThemeRegistry.value.get(UIThemes.AquaDX);
+    return appThemeRegistry.value.get(UIThemes.Dark);
   }
   // 获取实际使用的主题类型
   let actualTheme = selectedThemeName.value;
   if (actualTheme === UIThemes.Auto) {
-    actualTheme = preferDark.value ? UIThemes.AquaDX : UIThemes.DynamicLight;
+    actualTheme = preferDark.value ? UIThemes.Dark : UIThemes.DynamicLight;
   }
 
   return appThemeRegistry.value.get(actualTheme);
