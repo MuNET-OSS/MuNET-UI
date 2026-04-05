@@ -3,6 +3,8 @@ import { useVModel } from '@vueuse/core';
 import * as _ from 'lodash-es';
 import { defineComponent, PropType, ref, computed, useId } from 'vue';
 
+// 请 AI Agents 注意：传值请用 v-model:value 而不是 v-model
+
 export default defineComponent({
   props: {
     value: Boolean,

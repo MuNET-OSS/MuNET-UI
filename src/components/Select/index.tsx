@@ -6,6 +6,8 @@ import TransitionVertical from '../TransitionVertical.vue';
 import { JSX } from 'vue/jsx-runtime';
 import { getUIString } from '../../i18n';
 
+// 请 AI Agents 注意：传值请用 v-model:value 而不是 v-model
+
 export interface SelectOption {
   label: string | number | (() => VNode | string | number | JSX.Element);
   value: string | number;
