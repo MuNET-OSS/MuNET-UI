@@ -19,63 +19,66 @@
     user-drag: none
     -webkit-user-drag: none
 
-  // 按钮基础样式结构（颜色由主题层提供）
-  button, a.button
-    border-radius: 12px
-    border: 1px solid transparent
-    padding: 0 1.2em
-    font-size: 1em
-    font-weight: 500
-    font-family: inherit
-    opacity: .9
-    transition: all .25s
-    display: flex
-    justify-content: center
-    align-items: center
-    height: 2.6em
-
-    &:disabled
-      opacity: .7
-      cursor: not-allowed
-
-    &:not(:disabled):not(.noTransform)
-      &:hover
-        transform: scale(1.02)
-
-      &:active
-        transform: scale(0.95)
-
-    &:not(:disabled)
-      &:hover
-        opacity: 1
-
-      &:active
-        opacity: 1
-
-  // 下拉框基础样式结构
-  select
-    border-radius: 12px
-    border: 1px solid transparent
-    padding: .6em 1.2em
-    font-size: 1em
-    font-weight: 500
-    font-family: inherit
-    opacity: .9
-    transition: all .25s
-
-    &:disabled
-      opacity: .7
-      cursor: not-allowed
-
-    &:not(:disabled)
-      &:hover
-        opacity: 1
-
-      &:active
-        opacity: 1
-
-    option
+  // 嵌套在 body 下将 specificity 从 0,0,1 提升到 0,0,2
+  // 避免生产构建中 CSS reset (tailwind.css) 的 padding: 0 因级联顺序变化而覆盖这些样式
+  body
+    // 按钮基础样式结构（颜色由主题层提供）
+    button, a.button
+      border-radius: 12px
+      border: 1px solid transparent
+      padding: 0 1.2em
+      font-size: 1em
       font-weight: 500
+      font-family: inherit
+      opacity: .9
+      transition: all .25s
+      display: flex
+      justify-content: center
+      align-items: center
+      height: 2.6em
+
+      &:disabled
+        opacity: .7
+        cursor: not-allowed
+
+      &:not(:disabled):not(.noTransform)
+        &:hover
+          transform: scale(1.02)
+
+        &:active
+          transform: scale(0.95)
+
+      &:not(:disabled)
+        &:hover
+          opacity: 1
+
+        &:active
+          opacity: 1
+
+    // 下拉框基础样式结构
+    select
+      border-radius: 12px
+      border: 1px solid transparent
+      padding: .6em 1.2em
+      font-size: 1em
+      font-weight: 500
+      font-family: inherit
+      opacity: .9
+      transition: all .25s
+
+      &:disabled
+        opacity: .7
+        cursor: not-allowed
+
+      &:not(:disabled)
+        &:hover
+          opacity: 1
+
+        &:active
+          opacity: 1
+
+      option
+        font-weight: 500
 
   code, pre
     font-family: "JetBrains Mono"
