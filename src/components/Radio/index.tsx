@@ -1,4 +1,4 @@
-import { defineComponent, PropType, useId } from 'vue';
+import { computed, defineComponent, inject, PropType, Ref, useId } from 'vue';
 
 export default defineComponent({
   props: {
@@ -9,15 +9,17 @@ export default defineComponent({
   },
   setup(props, { emit, slots }) {
     const id = useId();
+    const disabledInject = inject<Ref<boolean>>('disabled');
+    const disabled = computed(() => props.disabled || disabledInject?.value);
 
-    return () => <div class="flex gap-2 items-center">
+    return () => <div class="flex gap-2 items-center" style={{ opacity: disabled.value ? 0.5 : undefined }}>
       <input
         type="radio" id={id}
         checked={props.value === props.k}
-        disabled={props.disabled}
+        disabled={disabled.value}
         onClick={(e: Event) => {
           e.preventDefault();
-          if (props.disabled) return;
+          if (disabled.value) return;
           emit('update:value', props.k);
           props.onClick?.();
         }}

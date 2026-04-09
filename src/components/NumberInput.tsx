@@ -12,6 +12,7 @@ export default defineComponent({
     value: { type: Number, default: 0 },
     onChange: Function as PropType<() => void>,
     onFocus: Function as PropType<() => void>,
+    innerClass: { type: String, default: 'min-h-12 cst' },
   },
   setup(props, { emit }) {
     const value = useVModel(props, 'value', emit);
@@ -39,6 +40,6 @@ export default defineComponent({
       refresh();
     }, { immediate: true });
 
-    return () => <TextInput ref={inputRef} v-model:value={wrap.value} type="number" step={props.step} onBlur={commitChange} onEnterPressed={commitChange} onFocus={props.onFocus} />;
+    return () => <TextInput ref={inputRef} v-model:value={wrap.value} type="number" step={props.step} onBlur={commitChange} onEnterPressed={commitChange} onFocus={props.onFocus} innerClass={props.innerClass} />;
   },
 });
