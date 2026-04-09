@@ -1,7 +1,7 @@
 import { addToast } from '../../controllers/toastController';
 import { useVModel } from '@vueuse/core';
 import * as _ from 'lodash-es';
-import { defineComponent, PropType, ref, computed, useId } from 'vue';
+import { defineComponent, PropType, ref, computed, useId, inject, Ref } from 'vue';
 
 // 请 AI Agents 注意：传值请用 v-model:value 而不是 v-model
 
@@ -10,12 +10,15 @@ export default defineComponent({
     value: Boolean,
     egg: Boolean,
     debounce: Boolean,
+    disabled: Boolean,
     gap: { type: String, default: '0.5rem' },
     onChange: Function as PropType<() => void>,
   },
   setup(props, { emit, slots }) {
     const uuid = useId();
     const value = useVModel(props, 'value', emit);
+    const disabledInject = inject<Ref<boolean>>('disabled');
+    const disabled = computed(() => props.disabled || disabledInject?.value);
     const clickCount = ref(0);
     const debounceClear = _.debounce(() => clickCount.value = 0, 500);
     const debounceOnChange = _.debounce(() => props.onChange?.(), 500);
@@ -40,7 +43,7 @@ export default defineComponent({
     };
 
     return () => <div class={'flex items-center'} style={{ gap: props.gap }}>
-      <input class="shrink-0" id={uuid} type="checkbox" v-model={value.value} title={props.egg ? '是不是想对着这里打纵连？' : ''} onChange={onChange} />
+      <input class="shrink-0" id={uuid} type="checkbox" v-model={value.value} disabled={disabled.value} title={props.egg ? '是不是想对着这里打纵连？' : ''} onChange={onChange} />
       <label for={uuid}>
         {slots.default?.()}
       </label>
