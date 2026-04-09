@@ -42,7 +42,7 @@ export default defineComponent({
       }
     };
 
-    return () => <div class={'flex items-center'} style={{ gap: props.gap }}>
+    return () => <div class={'flex items-center'} style={{ gap: props.gap, opacity: disabled.value ? 0.5 : undefined }}>
       <input class="shrink-0" id={uuid} type="checkbox" v-model={value.value} disabled={disabled.value} title={props.egg ? '是不是想对着这里打纵连？' : ''} onChange={onChange} />
       <label for={uuid}>
         {slots.default?.()}
