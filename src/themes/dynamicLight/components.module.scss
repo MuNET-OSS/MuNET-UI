@@ -48,7 +48,7 @@ body:has(.root) {
   input[type=radio] {
     border-color: oklch(0.68 0.17 var(--hue));
 
-    &:checked {
+    &:checked, &[checked] {
       background-color: oklch(0.68 0.17 var(--hue));
       border-color: oklch(0.68 0.17 var(--hue));
     }

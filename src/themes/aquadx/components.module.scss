@@ -44,7 +44,7 @@ body:has(.root) {
   input[type=radio] {
     border-color: #b3c6ff;
 
-    &:checked {
+    &:checked, &[checked] {
       background-color: #b3c6ff;
       border-color: #b3c6ff;
     }
