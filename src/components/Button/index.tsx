@@ -4,8 +4,8 @@ import { defineComponent, PropType } from 'vue';
 
 export default defineComponent({
   props: {
-    onClick: Function as PropType<() => any>,
-    onContextmenu: Function as PropType<() => any>,
+    onClick: Function as PropType<(e: MouseEvent) => any>,
+    onContextmenu: Function as PropType<(e: MouseEvent) => any>,
     disabled: Boolean,
     ing: Boolean,
     variant: String as PropType<'primary' | 'secondary' | 'ghost'>,
