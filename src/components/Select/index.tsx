@@ -153,6 +153,7 @@ const Select = defineComponent({
         ref={selectRef}
         class={[
           styles.select,
+          props.small && styles.small,
           theme.value.textInput,
           disabled.value && styles.disabled,
           isOpen.value && styles.open,
