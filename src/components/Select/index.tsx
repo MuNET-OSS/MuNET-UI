@@ -31,6 +31,8 @@ const Select = defineComponent({
       default: undefined,
     },
     disabled: Boolean,
+    // 下拉框宽度按内容自适应（不小于触发器宽度），且选项文字不换行
+    dropdownFit: Boolean,
     onChange: Function as PropType<(value: any) => void>,
   },
   setup(props, { emit, expose }) {
@@ -70,7 +72,9 @@ const Select = defineComponent({
       const baseStyle: CSSProperties = {
         position: 'fixed',
         left: `${rect.left}px`,
-        width: `${rect.width}px`,
+        ...(props.dropdownFit
+          ? { width: 'max-content', minWidth: `${rect.width}px`, maxWidth: '90vw' }
+          : { width: `${rect.width}px` }),
         '--hue': hue,
       } as CSSProperties;
       if (spaceBelow < dropdownMaxHeight && spaceAbove > spaceBelow) {
@@ -155,6 +159,7 @@ const Select = defineComponent({
                         option.value === value.value && styles.selected,
                         option.disabled && styles.optionDisabled,
                       ]}
+                      style={props.dropdownFit ? { whiteSpace: 'nowrap' } : undefined}
                       onClick={() => selectOption(option)}
                     >
                       {renderLabel(option.label)}
