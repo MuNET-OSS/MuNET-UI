@@ -82,7 +82,7 @@ body:has(.root) {
   }
 
   :global(.bg-dropMenu) {
-    background: oklch(0.9 0.02 var(--hue) / 50%);
+    background: oklch(0.93 0.02 var(--hue) / 80%);
   }
 
   :global(.bg-avatarMenu) {
