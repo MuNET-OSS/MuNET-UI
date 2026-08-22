@@ -49,7 +49,7 @@
   transform-origin: center
 
 .actions
-  transform: translateY(100%)
+  transform: translateY(100%) !important
 
   button
     flex-grow: 1
@@ -58,7 +58,7 @@
 
     &:not(:disabled)
       &:hover
-        transform: translateY(-5%)
+        transform: translateY(-5%) !important
 
     &:not(:disabled, :global(.bg-dialogButton-error))
       &:hover
