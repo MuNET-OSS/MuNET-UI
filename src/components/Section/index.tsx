@@ -8,6 +8,7 @@ export default defineComponent({
     title: String,
     icon: String,
     expend: Boolean,
+    innerClass: String,
   },
   setup(props, { emit, slots }) {
     const isExpend = ref(props.expend || false);
@@ -21,7 +22,7 @@ export default defineComponent({
         <div class={['i-solar:alt-arrow-down-linear transform duration-250', isExpend.value && 'rotate-180']} />
       </div>
       <TransitionVertical>
-        <div class="grid gap-2 p-4" v-show={isExpend.value}>
+        <div class={["grid gap-2 p-4", props.innerClass]} v-show={isExpend.value}>
           {slots.default?.(isExpend)}
         </div>
       </TransitionVertical>
