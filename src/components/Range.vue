@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
+import { isLightTheme } from '../themes';
 
 // https://github.com/moeru-ai/airi/blob/main/packages/ui/src/components/Form/Range/Range.vue
 
@@ -74,6 +75,17 @@ function handleInput(e: Event) {
   const target = e.target as HTMLInputElement
   target.style.setProperty('--value', target.value)
 }
+
+const sliderClass = computed(()=>{
+  const res = ['slider-progress','form_input-range'];
+  if(isLightTheme.value) {
+    res.push('themeIsLight');
+  }
+  else {
+    res.push('themeIsDark');
+  }
+  return res;
+})
 </script>
 
 <template>
@@ -84,12 +96,36 @@ function handleInput(e: Event) {
     :min="scaledMin"
     :max="scaledMax"
     :step="scaledStep"
-    class="slider-progress form_input-range"
+    :class="sliderClass"
     @input="handleInput"
   >
 </template>
 
 <style scoped>
+.themeIsLight {
+  --thumb-background: oklch(80% 0.07 calc(var(--hue) + 0));
+  --thumb-background-hover: oklch(90% 0.07 calc(var(--hue) + 0));
+  --thumb-background-active: oklch(70% 0.07 calc(var(--hue) + 0));
+  --track-border: solid 2px oklch(0.95 0.01 var(--hue));
+  --track-background: oklch(0.97 0.006 var(--hue));
+  --track-background-hover: oklch(0.97 0.006 var(--hue));
+  --track-background-active: oklch(0.97 0.006 var(--hue));
+  --track-value-background: rgb(255, 255, 255);
+  --track-value-background-hover: rgb(255, 255, 255);
+  --track-value-background-active: rgb(255, 255, 255);
+}
+.themeIsDark {
+  --thumb-background: #bbb;
+  --thumb-background-hover: #ccc;
+  --thumb-background-active: #ddd;
+  --track-border: solid 2px #585858;
+  --track-background: #383838;
+  --track-background-hover: #383838;
+  --track-background-active: #383838;
+  --track-value-background: #888;
+  --track-value-background-hover: #888;
+  --track-value-background-active: #888;
+}
 /*generated with Input range slider CSS style generator (version 20211225)
 https://toughengineer.github.io/demo/slider-styler*/
 .form_input-range {
@@ -106,21 +142,11 @@ https://toughengineer.github.io/demo/slider-styler*/
   --thumb-box-shadow: 0 0 0px #e6e6e6;
   --thumb-border: none;
   --thumb-border-radius: 999px;
-  --thumb-background: oklch(80% 0.07 calc(var(--hue) + 0));
-  --thumb-background-hover: oklch(90% 0.07 calc(var(--hue) + 0));
-  --thumb-background-active: oklch(70% 0.07 calc(var(--hue) + 0));
 
   --track-height: calc(var(--height) - var(--track-value-padding) * 2);
   --track-box-shadow: none;
-  --track-border: solid 2px oklch(0.95 0.01 var(--hue));
   --track-border-radius: 6px;
-  --track-background: oklch(0.97 0.006 var(--hue));
-  --track-background-hover: oklch(0.97 0.006 var(--hue));
-  --track-background-active: oklch(0.97 0.006 var(--hue));
 
-  --track-value-background: rgb(255, 255, 255);
-  --track-value-background-hover: rgb(255, 255, 255);
-  --track-value-background-active: rgb(255, 255, 255);
   --track-value-padding: 2px;
 }
 
