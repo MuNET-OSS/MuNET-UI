@@ -45,7 +45,7 @@ export { default as Progress } from './components/Progress';
 
 // 导出 GlobalElementsContainer 的子组件和 hooks
 export { foregroundTask } from './components/GlobalElementsContainer/ForegroundTask';
-export { showTransactionalDialog } from './components/GlobalElementsContainer/TransactionalDialog';
+export { showTransactionalDialog, TransactionalDialogConfirmCancelActions } from './components/GlobalElementsContainer/TransactionalDialog';
 export { taskManager } from './components/GlobalElementsContainer/TaskManager';
 
 

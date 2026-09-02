@@ -17,6 +17,7 @@ export default defineComponent({
     warn: Boolean,
     innerClass: { type: String, default: '' },
     actionDelay: { type: Number, default: 0 },
+    altLeaveDirection: Boolean,
   },
   setup(props, { emit, slots, expose }) {
     const modalId = ref<symbol | null>(null);
@@ -86,7 +87,7 @@ export default defineComponent({
     return () => <Teleport to="#app">
       <Transition
         duration={500 + actionDelay.value}
-        enterFromClass={styles.src} leaveToClass={styles.src} enterActiveClass={[styles.progress, styles.in].join(' ')} leaveActiveClass={[styles.progress, styles.out].join(' ')}
+        enterFromClass={styles.src} leaveToClass={props.altLeaveDirection ? styles.altDst : styles.dst} enterActiveClass={[styles.progress, styles.in].join(' ')} leaveActiveClass={[styles.progress, styles.out].join(' ')}
       >
         {show.value && <div class="mnui-modal-root" style={{ '--action-delay': actionDelay.value + 'ms' }}>
           <div class={styles.backdrop} style={{ zIndex: zIndex.value }} onClick={esc} />
