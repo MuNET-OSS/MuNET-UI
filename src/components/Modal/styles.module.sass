@@ -57,12 +57,14 @@
     opacity: 1 !important
 
     &:not(:disabled)
-      &:hover
-        transform: translateY(-5%) !important
+      @media (hover: hover)
+        &:hover
+          transform: translateY(-5%) !important
 
     &:not(:disabled, :global(.bg-dialogButton-error))
-      &:hover
-        background-color: var(--modal-button-hover-bg) !important
+      @media (hover: hover)
+        &:hover
+          background-color: var(--modal-button-hover-bg) !important
 
       &:active
         background-color: var(--modal-button-active-bg) !important

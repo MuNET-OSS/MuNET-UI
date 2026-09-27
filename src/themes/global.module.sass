@@ -42,15 +42,17 @@
         cursor: not-allowed
 
       &:not(:disabled):not(.noTransform)
-        &:hover
-          transform: scale(1.02)
+        @media (hover: hover)
+          &:hover
+            transform: scale(1.02)
 
         &:active
           transform: scale(0.95)
 
       &:not(:disabled)
-        &:hover
-          opacity: 1
+        @media (hover: hover)
+          &:hover
+            opacity: 1
 
         &:active
           opacity: 1
@@ -160,4 +162,3 @@
     left: 0
     right: 0
     bottom: 0
-

@@ -21,8 +21,10 @@ body:has(.root) {
     background-color: #ffffff14;
 
     &:not(:disabled) {
-      &:hover {
-        background-color: #ffffff1a;
+      @media (hover: hover) {
+        &:hover {
+          background-color: #ffffff1a;
+        }
       }
 
       &:active {
@@ -112,8 +114,10 @@ body:has(.root) {
   :global(.bg-dialogButton-error) {
     background-color: rgb(159 18 57) !important;
 
-    &:hover {
-      background-color: rgb(190 18 60) !important;
+    @media (hover: hover) {
+      &:hover {
+        background-color: rgb(190 18 60) !important;
+      }
     }
   }
 

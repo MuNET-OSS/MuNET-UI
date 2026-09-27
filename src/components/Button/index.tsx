@@ -19,7 +19,7 @@ export default defineComponent({
         // if (props.variant === 'primary') {
         //   return 'bg-red-600! border-red-600! text-white!';
         // }
-        return 'text-red-4 hover:bg-red-4/10!';
+        return 'text-red-4 [@media(hover:hover)]:hover:bg-red-4/10!';
       }
 
       switch (props.variant) {
