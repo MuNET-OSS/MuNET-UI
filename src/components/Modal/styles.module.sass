@@ -81,10 +81,9 @@
     background: var(--modal-title-handle-bg)
     border-radius: 9999px
 
-.src
+.src, .dst, .altDst
   .backdrop, .modal, .title, .content, .actions
     opacity: 0
-    transform: scale(1.1)
 
   .title
     transform: translateY(-1em)
@@ -94,3 +93,11 @@
 
   .actions
     transform: translateY(200%)
+
+.dst
+  .modal, .title, .content, .actions
+    transform: scale(1.1)
+
+.altDst
+  .modal, .title, .content, .actions
+    transform: scale(.9)

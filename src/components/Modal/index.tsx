@@ -1,5 +1,5 @@
 import { useMagicKeys, useTimeout, useVModel, whenever } from '@vueuse/core';
-import { defineComponent, PropType, computed, watch, Transition, Teleport, onBeforeUnmount, ref, inject } from 'vue';
+import { defineComponent, PropType, computed, watch, Transition, Teleport, onBeforeUnmount, ref, inject, MaybeRef, unref } from 'vue';
 import { modalShowing, registerModal, unregisterModal, getModalIndex, isTopModal } from '../../states/modal';
 import styles from './styles.module.sass';
 import WarningBackground from '../WarningBackground';
@@ -17,6 +17,7 @@ export default defineComponent({
     warn: Boolean,
     innerClass: { type: String, default: '' },
     actionDelay: { type: Number, default: 0 },
+    altLeaveDirection: Boolean,
   },
   setup(props, { emit, slots, expose }) {
     const modalId = ref<symbol | null>(null);
@@ -68,7 +69,7 @@ export default defineComponent({
     const { escape } = useMagicKeys();
     whenever(() => escape.value, esc);
     // 用于 noron，对话框只在下半屏出现
-    const positionClass = inject('modalPosition', "absolute left-0 right-0 bottom-0 top-0")
+    const positionClass = inject<MaybeRef<string>>('modalPosition', "absolute left-0 right-0 bottom-0 top-0")
 
     const actionDelayOver = ref(false);
     watch(() => show.value, v => {
@@ -86,11 +87,11 @@ export default defineComponent({
     return () => <Teleport to="#app">
       <Transition
         duration={500 + actionDelay.value}
-        enterFromClass={styles.src} leaveToClass={styles.src} enterActiveClass={[styles.progress, styles.in].join(' ')} leaveActiveClass={[styles.progress, styles.out].join(' ')}
+        enterFromClass={styles.src} leaveToClass={props.altLeaveDirection ? styles.altDst : styles.dst} enterActiveClass={[styles.progress, styles.in].join(' ')} leaveActiveClass={[styles.progress, styles.out].join(' ')}
       >
         {show.value && <div class="mnui-modal-root" style={{ '--action-delay': actionDelay.value + 'ms' }}>
           <div class={styles.backdrop} style={{ zIndex: zIndex.value }} onClick={esc} />
-          <div class={positionClass}>
+          <div class={unref(positionClass)}>
             <div class={['absolute left-50% top-50% translate--50%', props.esc && styles.modalOut]} style={{ zIndex: zIndex.value + 1 }}>
               <div class={['bg-modal rd-2xl p-6 flex flex-col max-w-90dvw', styles.modal, props.innerClass]} style={{ width: props.width, zIndex: zIndex.value + 2 }}>
                 {props.warn && (slots.warning?.() || <WarningBackground class="absolute top-0 left-0 right-0 h-12 rd-t-2xl" />)}

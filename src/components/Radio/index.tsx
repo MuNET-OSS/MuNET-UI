@@ -17,8 +17,7 @@ export default defineComponent({
         type="radio" id={id}
         checked={props.value === props.k}
         disabled={disabled.value}
-        onClick={(e: Event) => {
-          e.preventDefault();
+        onClick={() => {
           if (disabled.value) return;
           emit('update:value', props.k);
           props.onClick?.();
