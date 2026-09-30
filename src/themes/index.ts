@@ -29,12 +29,18 @@ const isOklchSupport = CSS.supports("color", "oklch(0.5 0.1 200)");
 // 主题配置
 export const selectedThemeName = useStorage('theme', UIThemes.Auto);
 export const selectedThemeHue = useStorage<number>('theme-hue', null as any);
+/** 非持久化的临时主题覆盖，离开声明了覆盖的路由后自动恢复 */
+export const themeOverride = ref<number | null>(null);
 
 const preferDark = usePreferredDark();
 
 export const realThemeName = computed<number>(() => {
   if (!isOklchSupport) {
     return UIThemes.Dark;
+  }
+
+  if (themeOverride.value != null) {
+    return themeOverride.value;
   }
 
   if (selectedThemeName.value === UIThemes.Auto) {
@@ -108,13 +114,7 @@ const currentAppTheme = computed<ThemeLayer | undefined>(() => {
   if (!isOklchSupport) {
     return appThemeRegistry.value.get(UIThemes.Dark);
   }
-  // 获取实际使用的主题类型
-  let actualTheme = selectedThemeName.value;
-  if (actualTheme === UIThemes.Auto) {
-    actualTheme = preferDark.value ? UIThemes.Dark : UIThemes.DynamicLight;
-  }
-
-  return appThemeRegistry.value.get(actualTheme);
+  return appThemeRegistry.value.get(realThemeName.value);
 });
 
 // 最终导出：合并 Global + UI + App 三层
@@ -147,4 +147,3 @@ export const isLightTheme = computed(() => {
 // 导出主题层（供外部使用）
 export { dynamicLightUI, dynamicLightVars } from './dynamicLight';
 export { aquadxUI, aquadxVars } from './aquadx';
-
