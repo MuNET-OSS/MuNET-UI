@@ -6,6 +6,7 @@ export default defineComponent({
   props: {
     onClick: Function as PropType<(e: MouseEvent) => any>,
     onContextmenu: Function as PropType<(e: MouseEvent) => any>,
+    onMouseleave: Function as PropType<(e: MouseEvent) => any>,
     disabled: Boolean,
     ing: Boolean,
     variant: String as PropType<'primary' | 'secondary' | 'ghost'>,
@@ -44,7 +45,7 @@ export default defineComponent({
       return '';
     };
 
-    return () => <button class={['relative of-hidden', getVariantClass(), getSizeClass()]} disabled={props.disabled || props.ing} onClick={props.onClick} onContextmenu={props.onContextmenu} title={props.title}>
+    return () => <button class={['relative of-hidden', getVariantClass(), getSizeClass()]} disabled={props.disabled || props.ing} onClick={props.onClick} onContextmenu={props.onContextmenu} onMouseleave={props.onMouseleave} title={props.title}>
       <div class="z-2 inline-flex items-center justify-center">{slots.default?.()}</div>
       {props.ing && <LoadingBackground class={['absolute bottom-0 left-0 right-0 top-25% z-1', theme.value.loadingBackground]} />}
     </button>;

@@ -29,6 +29,8 @@ const TextInput = defineComponent({
     onFocus: Function as PropType<() => void>,
     innerClass: { type: String, default: 'min-h-12 cst' },
   },
+  // useVModel 会 emit update:value，必须声明后组件的 props 类型才包含 onUpdate:value
+  emits: ['update:value'],
   setup(props, { emit, expose }) {
     const value = useVModel(props, 'value', emit);
     const disabledInject = inject<Ref<boolean>>('disabled');
