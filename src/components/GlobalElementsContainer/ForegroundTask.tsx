@@ -53,10 +53,10 @@ export default defineComponent({
     return () => (
       <Transition
         duration={{ enter: 500, leave: 500 }}
-        leaveActiveClass="transition-opacity duration-500 transition-ease-in-out"
+        leaveActiveClass="transition-opacity duration-500 ease-in-out"
         leaveFromClass="opacity-100"
         leaveToClass="opacity-0"
-        enterActiveClass="transition-opacity duration-500 transition-ease-in-out"
+        enterActiveClass="transition-opacity duration-500 ease-in-out"
         enterToClass="opacity-100"
         enterFromClass="opacity-0"
       >
