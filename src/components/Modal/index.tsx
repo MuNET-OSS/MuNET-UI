@@ -93,15 +93,15 @@ export default defineComponent({
           <div class={styles.backdrop} style={{ zIndex: zIndex.value }} onClick={esc} />
           <div class={unref(positionClass)}>
             <div class={['absolute left-50% top-50% translate--50%', props.esc && styles.modalOut]} style={{ zIndex: zIndex.value + 1 }}>
-              <div class={['bg-modal rd-2xl p-6 flex flex-col max-w-90dvw', styles.modal, props.innerClass]} style={{ width: props.width, zIndex: zIndex.value + 2 }}>
+              <div class={['bg-modal rd-2xl p-6 flex flex-col max-w-90dvw max-h-[calc(100dvh-4rem)]', styles.modal, props.innerClass]} style={{ width: props.width, zIndex: zIndex.value + 2 }}>
                 {props.warn && (slots.warning?.() || <WarningBackground class="absolute top-0 left-0 right-0 h-12 rd-t-2xl" />)}
-                <div class="flex flex-col gap-4">
-                  <div class={['text-1.5em flex items-center justify-center']}>
+                <div class="flex flex-col gap-4 flex-1 min-h-0">
+                  <div class={['text-1.5em flex items-center justify-center shrink-0']}>
                     <div class={[styles.title]}>
                       {props.title}
                     </div>
                   </div>
-                  <div class={[styles.content]}>
+                  <div class={[styles.content, 'flex-1 min-h-0 of-y-auto cst']}>
                     {slots.default?.()}
                   </div>
                 </div>
