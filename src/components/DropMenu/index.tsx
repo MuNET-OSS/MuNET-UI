@@ -17,7 +17,7 @@ type DropDownController = {
 export default defineComponent({
   props: {
     buttonText: { type: String as PropType<string>, default: 'Menu' },
-    width: { type: String as PropType<string>, default: 'max-context' },
+    width: { type: String as PropType<string>, default: 'max-content' },
     row: Boolean,
     options: { type: Array as PropType<readonly DropMenuOption[]>, default: () => [] },
     innerClass: { type: String as PropType<string>, default: '' },
